@@ -33,9 +33,11 @@
             <div class="col-md-9">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
-                        <h4>Dashboard</h4>
+                        <h4>{{\Illuminate\Support\Facades\Auth::user()->name}} Dashboard</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque.
+                            Fbi waring black desert nier automata bla bla
+                            {{\Illuminate\Support\Facades\Auth::user()->desc}}
+
                         </p>
                     </div>
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
@@ -103,23 +105,30 @@
                             </div>
                         </div>
                     </div>
+
+{{--                    acount--}}
                     <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                         <h4>Account Details</h4>
                         <div class="row">
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="First Name">
+                                Name:
+                                <input class="form-control" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->full_name}}" placeholder="Full Name">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="Last Name">
+                                Full Name:
+                                <input class="form-control" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->name}}" placeholder="Name">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="Mobile">
+                                Phone Number
+                                <input class="form-control" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->phone}}" placeholder="Phone Number">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="Email">
+                                Email
+                                <input class="form-control" type="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}" placeholder="Email">
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="Address">
+                                Address
+                                <input class="form-control" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->address}}" placeholder="Address">
                             </div>
                             <div class="col-md-12">
                                 <button class="btn">Update Account</button>
@@ -129,12 +138,15 @@
                         <h4>Password change</h4>
                         <div class="row">
                             <div class="col-md-12">
-                                <input class="form-control" type="password" placeholder="Current Password">
+                                Old Password:
+                                <input class="form-control" type="password" value="{{\Illuminate\Support\Facades\Auth::user()->getAuthPassword()}}" placeholder="Current Password">
                             </div>
                             <div class="col-md-6">
+                                New Password:
                                 <input class="form-control" type="text" placeholder="New Password">
                             </div>
                             <div class="col-md-6">
+                                Confirm New Password:
                                 <input class="form-control" type="text" placeholder="Confirm Password">
                             </div>
                             <div class="col-md-12">
