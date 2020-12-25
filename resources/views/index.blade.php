@@ -73,7 +73,9 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
-                        <a href="{{ url('/dashboard') }}" class="nav-link">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                                <a href="{{ url('/dashboard') }}" class="nav-link">{{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+
+
                             @else
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                                 <div class="dropdown-menu">

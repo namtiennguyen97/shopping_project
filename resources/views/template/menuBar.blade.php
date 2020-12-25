@@ -30,15 +30,15 @@
                                 <a href="{{ url('/dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
                                 <div class="dropdown-menu">
 
-                                    <a href="{{ route('profile.show') }}" class="dropdown-item">Profile</a>
+                                    <a href="{{ route('profile.show') }}" class="dropdown-item">Profile <i class="fas fa-user"></i></a>
 
                                         <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
                                             @csrf
 
-                                            <a style="color: white" href="{{ route('logout') }}"
+                                            <a style="color: black" href="{{ route('logout') }}"
                                                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                            Logout</a>
+                                            Logout <i class="fas fa-sign-out-alt"></i></a>
                                         </form>
 
                                 </div>
