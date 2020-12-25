@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="10e8639e-eac0-4e23-9494-d3a753ef08e9" name="Default Changelist" comment="" />
+    <list default="true" id="10e8639e-eac0-4e23-9494-d3a753ef08e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,6 +140,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1m18eO06nzxGeHvzalUFWCzkNm9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -186,7 +189,7 @@
       <workItem from="1608649837400" duration="8663000" />
       <workItem from="1608692057886" duration="10902000" />
       <workItem from="1608825894263" duration="5466000" />
-      <workItem from="1608876195436" duration="11735000" />
+      <workItem from="1608876195436" duration="11980000" />
     </task>
     <servers />
   </component>
