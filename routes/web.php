@@ -36,3 +36,4 @@ Route::get('/page-guest',[\App\Http\Controllers\Controller::class,'showPageGuest
 Route::get('/page-admin',[\App\Http\Controllers\Controller::class,'showPageAdmin']);
 
 Route::post('/updateUser/{id}',[\App\Http\Controllers\UserController::class,'updateUser'])->name('update.user');
+Route::post('/updatePassword/{id}',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('update.password');

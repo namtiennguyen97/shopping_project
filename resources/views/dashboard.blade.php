@@ -109,55 +109,62 @@
 {{--                    acount--}}
                     <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                         <h4>Account Details</h4>
-                        <form id="updateUserForm">
-                            @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                Name:
-                                <input class="form-control" name="full_name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->full_name}}" placeholder="Full Name">
-                            </div>
-                            <div class="col-md-6">
-                                Full Name:
-                                <input class="form-control" name="name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->name}}" placeholder="Name">
-                            </div>
-                            <div class="col-md-6">
-                                Phone Number
-                                <input class="form-control" name="phone" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->phone}}" placeholder="Phone Number">
-                            </div>
-                            <div class="col-md-6">
-                                Email
-                                <input class="form-control" name="email" type="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}" readonly>
-                            </div>
-                            <div class="col-md-12">
-                                Address
-                                <input class="form-control" name="address" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->address}}" placeholder="Address">
-                            </div>
-                            <input hidden id="showId" data-id="{{\Illuminate\Support\Facades\Auth::user()->id}}">
-                            <div class="col-md-12">
-                                <button class="btn" type="submit">Update Account</button>
-                                <br><br>
-                            </div>
+                        <div id="appendData">
+                            <form id="updateUserForm">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Name:
+                                        <input class="form-control" id="editName" name="name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->name}}" placeholder="Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        Full Name:
+                                        <input class="form-control" id="editFullName" name="full_name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->full_name}}" placeholder="Full Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        Phone Number
+                                        <input class="form-control" id="editPhone" name="phone" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->phone}}" placeholder="Phone Number">
+                                    </div>
+                                    <div class="col-md-6">
+                                        Email
+                                        <input class="form-control" name="email" type="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}" readonly>
+                                    </div>
+                                    <div class="col-md-12">
+                                        Address
+                                        <input class="form-control" id="editAddress" name="address" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->address}}" placeholder="Address">
+                                    </div>
+                                    <input hidden id="showId" data-id="{{\Illuminate\Support\Facades\Auth::user()->id}}">
+                                    <div class="col-md-12">
+                                        <button class="btn" type="submit">Update Account</button>
+                                        <br><br>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        </form>
-
                         <h4>Password change</h4>
+                        <form id="changePassword">
+                        @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 Old Password:
-                                <input class="form-control" type="password" value="{{\Illuminate\Support\Facades\Auth::user()->getAuthPassword()}}" placeholder="Current Password">
+                                <input class="form-control" type="password" required  placeholder="Current Password">
+
                             </div>
                             <div class="col-md-6">
                                 New Password:
-                                <input class="form-control" type="text" placeholder="New Password">
+                                <input class="form-control" id="newPassword" name="newPassword" type="text" required placeholder="New Password">
+
                             </div>
                             <div class="col-md-6">
                                 Confirm New Password:
-                                <input class="form-control" type="text" placeholder="Confirm Password">
+                                <input class="form-control" id="confirmNewPassword" name="confirmNewPassword" required type="text" placeholder="Confirm Password">
+
                             </div>
                             <div class="col-md-12">
-                                <button class="btn">Save Changes</button>
+                                <button type="submit" id="changePassword" class="btn">Save Changes</button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -166,6 +173,7 @@
 </div>
 
 {{--end my account--}}
+
 
 <script>
 
@@ -177,10 +185,44 @@
             url: "updateUser/" +id,
             method: 'post',
             data: $('#updateUserForm').serialize(),
-            success: function () {
+            success: function (data) {
+                $('#editName').val(data.name);
+                $('#editPhone').val(data.phone);
+                $('#editFullName').val(data.full_name);
+                $('#editAddress').val(data.address);
+                $('#accountName').text(data.name);
                 alertify.success("Updated successfully!");
 
             }
         });
     });
+
+    $('#changePassword').on('submit', function (e) {
+        e.preventDefault();
+        let id = $('#showId').data('id');
+        $.ajax({
+            url: "updatePassword/" + id,
+            method: 'post',
+            data: $('#changePassword').serialize(),
+            success: function () {
+                alertify.success("Password changed successfully!");
+            }
+        });
+    })
+
+    {{--renderUser();--}}
+    {{--function renderUser() {--}}
+    {{--    $.ajax({--}}
+    {{--        url: "{{route('user.render')}}",--}}
+    {{--        method: 'get',--}}
+    {{--        dataType: 'json',--}}
+    {{--        success: function (data) {--}}
+    {{--            $('#appendData').html(data.data_table);--}}
+    {{--        }--}}
+    {{--    });--}}
+    {{--}--}}
+
+
+
+
 </script>
