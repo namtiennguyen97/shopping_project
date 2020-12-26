@@ -187,6 +187,7 @@
             $.ajax({
                 url: "updateUser/" + id,
                 method: 'post',
+                data: $('#userEditForm').serialize(),
                 success: function () {
                     alertify.success("Update Successfully");
                     renderUser();

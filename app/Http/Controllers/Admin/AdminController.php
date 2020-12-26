@@ -51,5 +51,6 @@ class AdminController extends Controller
 
     public function editUser(Request $request, $id){
         User::find($id)->update($request->all());
+
     }
 }
