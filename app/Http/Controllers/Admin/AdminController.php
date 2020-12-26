@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class AdminController extends Controller
     {
 
     }
-
+// render user in admin
     public function renderUser(){
         $user = User::all();
         $output = '';
@@ -40,17 +41,38 @@ class AdminController extends Controller
         ];
         echo json_encode($arrayData);
     }
-
+//admin show User manager template
     public function userManager(){
-        return view('admin.permisson.userManager');
+        if ($this->userCan('view-page-admin')){
+            return view('admin.permisson.userManager');
+        }
+        return redirect()->route('index');
     }
-
+//deleteUser
     public function deleteUser($id){
-        User::destroy($id);
+        if ($this->userCan('view-page-admin')){
+            User::destroy($id);
+        }
+
     }
 
+    // edit User
     public function editUser(Request $request, $id){
-        User::find($id)->update($request->all());
+        if ($this->userCan('view-page-admin')){
+           $user = User::find($id);
+            $user->name = $request->input('name');
+            $user->full_name = $request->input('full_name');
+            $user->address = $request->input('address');
+            $user->phone = $request->input('phone');
+            $user->role_id = $request->input('role_id');
+            $user->save();
+            return $user;
+        }
+    }
 
+    //Product controller
+    public function productIndex(){
+        $product = Product::all();
+        return view('', compact('product'));
     }
 }

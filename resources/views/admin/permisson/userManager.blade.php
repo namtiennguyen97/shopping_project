@@ -154,14 +154,19 @@
         $('#showUserData').on('click','.deleteUser', function (e) {
                 e.preventDefault();
                 let id = $(this).data('id');
-                $.ajax({
-                    url: "deleteUser/" + id,
-                    method: 'get',
-                    success: function () {
-                        alertify.success("Delete successfully!");
-                        renderUser();
-                    }
-                })
+             let confirmDel = confirm("Are you sure that you delete this user?");
+             if (confirmDel == true){
+                 $.ajax({
+                     url: "deleteUser/" + id,
+                     method: 'get',
+                     success: function () {
+
+                         alertify.success("Delete successfully!");
+                         renderUser();
+                     }
+                 })
+             }
+
         })
 
         //show modal update
@@ -188,8 +193,9 @@
                 url: "updateUser/" + id,
                 method: 'post',
                 data: $('#userEditForm').serialize(),
-                success: function () {
+                success: function (data) {
                     alertify.success("Update Successfully");
+                    $('#adminName').text(data.name);
                     renderUser();
                 }
             });
