@@ -142,6 +142,7 @@
                             </form>
                         </div>
                         <h4>Password change</h4>
+
                         <form id="changePassword">
                         @csrf
                         <div class="row">
@@ -152,19 +153,24 @@
                             </div>
                             <div class="col-md-6">
                                 New Password:
-                                <input class="form-control" id="newPassword" name="newPassword" type="text" required placeholder="New Password">
-
+                                <input class="form-control @error('newPassword') is-invalid @enderror" id="newPassword" name="newPassword" type="text" required placeholder="New Password">
+                                @error('newPassword')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 Confirm New Password:
                                 <input class="form-control" id="confirmNewPassword" name="confirmNewPassword" required type="text" placeholder="Confirm Password">
-
+                                @error('confirmNewPassword')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" id="changePassword" class="btn">Save Changes</button>
+                                <button type="submit"  class="btn">Save Changes</button>
                             </div>
                         </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -198,7 +204,7 @@
     });
 
     $('#changePassword').on('submit', function (e) {
-        e.preventDefault();
+        e.preventDefault()
         let id = $('#showId').data('id');
         $.ajax({
             url: "updatePassword/" + id,
@@ -206,6 +212,11 @@
             data: $('#changePassword').serialize(),
             success: function () {
                 alertify.success("Password changed successfully!");
+                alertify.alert("ALERT","You have to re-Login");
+                window.location.reload();
+            },
+            error: function (data) {
+                alertify.error("Something has wrong!");
             }
         });
     })

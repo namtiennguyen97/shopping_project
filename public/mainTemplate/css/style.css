@@ -2436,9 +2436,21 @@ h2 {
 }
 
 .show-cart-detail{
-    background-color: #cca8e2;
+    background-color: #f9fff3;
 }
 
 .confirm-checkout{
     background-color: #329a34;
+}
+
+.select-total {
+
+    background-color: #3f83f8;
+}
+.totalProduct{
+    text-align: left;
+}
+.deleteProduct{
+    position: relative;
+    right: -70px;
 }

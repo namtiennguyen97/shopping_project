@@ -34,12 +34,13 @@ class Controller extends BaseController
             abort('403',__('You re not enough authorize to access this website'));
 
         }
-        return view('guest');
+        return view('dashboard');
     }
     public function showPageAdmin(){
         if (!$this->userCan('view-page-admin')){
-            abort('403',__('You re not enough authorize to access this website'));
+//            abort('403',__('You re not enough authorize to access this website'));
+            return redirect()->route('login');
         }
-        return view('admin');
+        return view('admin.index');
     }
 }

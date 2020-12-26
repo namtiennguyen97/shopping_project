@@ -26,11 +26,12 @@ class User extends Authenticatable
     public $table = 'users';
     protected $fillable = [
         'name',
-        'email',
-        'password',
         'full_name',
         'phone',
+        'email',
         'address',
+        'role_id',
+        'password',
 
     ];
 
@@ -64,7 +65,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function user_role(){
-        return $this->belongsTo(Roles::class);
+    public function userRole(){
+        return $this->belongsTo(Roles::class,'role_id','id','roles');
     }
 }

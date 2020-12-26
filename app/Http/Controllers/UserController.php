@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,27 +22,20 @@ class UserController extends Controller
         return $user;
     }
 
-    public function updatePassword(Request $request, $id){
-//        $currentPassword = Auth::user()->getAuthPassword();
 
-        $validatedData = $request->validate([
+//    public function IDChangePassword($id){
+//       $userID =  User::findOrFail($id);
+//        return view('dashboard', compact('userID'));
+//    }
+    public function updatePassword(Request $request, $id){
+        $request->validate([
             'newPassword' => 'required|min:8',
             'confirmNewPassword' => 'required|same:newPassword'
         ]);
+            $user = User::find($id);
+            $user->password = Hash::make($request->input('confirmNewPassword'));
+            $user->save();
 
-//        $request->validate([
-//            'newPassword' => 'required|min:8',
-//            'confirmNewPassword' => 'required|same:newPassword'
-//        ]);
-//        $this->validate($request, [
-//                        'newPassword' => 'required|min:8',
-//            'confirmNewPassword' => 'required|same:newPassword'
-//        ]);
-
-        $user = User::find($id);
-        $user->password = Hash::make($request->input('confirmNewPassword'));
-        $user->save();
-        return $validatedData;
     }
 
 }

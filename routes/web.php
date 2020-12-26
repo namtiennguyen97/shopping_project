@@ -32,8 +32,18 @@ Route::get('/admin',function (){
 
 
 
-Route::get('/page-guest',[\App\Http\Controllers\Controller::class,'showPageGuest']);
-Route::get('/page-admin',[\App\Http\Controllers\Controller::class,'showPageAdmin']);
+
 
 Route::post('/updateUser/{id}',[\App\Http\Controllers\UserController::class,'updateUser'])->name('update.user');
 Route::post('/updatePassword/{id}',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('update.password');
+//Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'IDChangePassword'])->name('id_user');
+
+//Admin blade
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
+    Route::get('/page-guest',[\App\Http\Controllers\Controller::class,'showPageGuest']);
+    Route::get('/',[\App\Http\Controllers\Controller::class,'showPageAdmin'])->name('admin.index');
+    Route::get('/userManager',[\App\Http\Controllers\Admin\AdminController::class,'userManager'])->name('admin.user');
+    Route::get('/userRender',[\App\Http\Controllers\Admin\AdminController::class,'renderUser'])->name('render.user');
+    Route::get('/deleteUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteUser'])->name('admin.delete.user');
+    Route::post('/updateUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'editUser'])->name('admin.edit.user');
+});

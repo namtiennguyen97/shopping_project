@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>E Store - eCommerce HTML Template</title>
+    <title>N Store</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="eCommerce HTML Template Free Download" name="keywords">
     <meta content="eCommerce HTML Template Free Download" name="description">
@@ -65,7 +65,7 @@
                         <div class="dropdown-menu">
                             <a href="wishlist.html" class="dropdown-item">Wishlist</a>
                             <a href="login.html" class="dropdown-item">Login & Register</a>
-                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="{{route('admin.index')}}" class="dropdown-item">Admin</a>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="180" class="img img-thumbnail"></td>
+                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="120" class="img img-thumbnail"></td>
                                                 <td>
                                                     <div>
                                                         <p>3000 x 6</p>
@@ -144,25 +144,17 @@
                                                     </div>
                                                 </td>
                                                 <td class="si-close">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                    <i class="fa fa-times deleteProduct" aria-hidden="true"></i>
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="180" class="img img-thumbnail"></td>
-                                                <td>
-                                                    <div>
-                                                        <p>3000 x 6</p>
-                                                        <h5>Blouse hhfhffffffrf</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </td>
-                                            </tr>
 
                                             </tbody>
                                         </table>
+                                        <div class="select-total">
+                                            <span class="totalProduct">Total:</span>
+                                            <h5>65465₫</h5>
+                                        </div>
                                     </div>
 
                                 </div>
