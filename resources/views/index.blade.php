@@ -9,11 +9,18 @@
 
     <!-- Favicon -->
     <link href="{{asset('mainTemplate/img/favicon.ico')}}" rel="icon">
-
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
 
     <!-- CSS Libraries -->
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="{{asset('mainTemplate/lib/slick/slick.css')}}" rel="stylesheet">
@@ -21,6 +28,8 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('mainTemplate/css/style.css')}}" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 </head>
 
 <body>
@@ -121,7 +130,12 @@
 {{--add data here--}}
                         <a class="btn cart">
                             <i class="fa fa-shopping-cart cart-show-list"></i>
-                            <span>(0)</span>
+
+                                @if(\Illuminate\Support\Facades\Session::has('Cart')!= null)
+                                <span id="totalQtyProduct">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
+                                    </span>
+                                    @endif
+
 
                             <div class="dropdown-contentA">
                                 <div class="backGroundColor">
@@ -131,31 +145,36 @@
 
                                 <div id="change-cart-items">
                                     {{--                                start here--}}
+                                    @if(\Illuminate\Support\Facades\Session::has('Cart') != null)
 
-                                    <div class="shopping-cart">
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="120" class="img img-thumbnail"></td>
-                                                <td>
-                                                    <div>
-                                                        <p>3000 x 6</p>
-                                                        <h5>Blouse f</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="fa fa-times deleteProduct" aria-hidden="true"></i>
-                                                </td>
-                                            </tr>
+                                        <div class="shopping-cart">
+                                            <table>
+                                                <tbody>
+                                                @foreach(\Illuminate\Support\Facades\Session::get('Cart')->product as $item)
+                                                    <tr>
+                                                        <td><img src="{{asset('storage/'.$item['productInfo']->image)}}" style="width: 60px; height: 60px" class="img img-thumbnail"></td>
+                                                        <td>
+                                                            <div>
+                                                                <p>{{number_format($item['productInfo']->price)}} x {{$item['qty']}}</p>
+                                                                <h5>{{$item['productInfo']->name}}</h5>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <i class="fa fa-times deleteProduct" data-id="{{$item['productInfo']->id}}" aria-hidden="true"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <input id="qtyCart-cart" hidden type="number" value="{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}">
+                                                @endforeach
 
-
-                                            </tbody>
-                                        </table>
-                                        <div class="select-total">
-                                            <span class="totalProduct">Total:</span>
-                                            <h5>65465₫</h5>
+                                                </tbody>
+                                            </table>
+                                            <div class="select-total">
+                                                <span class="totalProduct">Total:{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}</span>
+                                                <h5>{{number_format(\Illuminate\Support\Facades\Session::get('Cart')->totalPrice)}}</h5>
+                                            </div>
                                         </div>
-                                    </div>
+
+                                    @endif
 
                                 </div>
 
@@ -392,10 +411,12 @@
             <h1>Featured Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
+{{--            Foreach product data here--}}
+            @foreach(\App\Models\Product::all() as $row)
             <div class="col-lg-3">
                 <div class="product-item">
                     <div class="product-title">
-                        <a href="#">Product Name</a>
+                        <a href="#">{{$row->name}}</a>
                         <div class="ratting">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -406,132 +427,21 @@
                     </div>
                     <div class="product-image">
                         <a href="product-detail.html">
-                            <img src="{{asset('mainTemplate/img/product-1.jpg')}}" alt="Product Image">
+                            <img src="{{asset('storage/'. $row->image)}}" class="productImageFeather img img-thumbnail" alt="Product Image">
                         </a>
                         <div class="product-action">
-                            <a href="#"><i class="fa fa-cart-plus"></i></a>
+                            <a href="javascript:"><i class="fa fa-cart-plus" onclick="addCart({{$row->id}})"></i></a>
                             <a href="#"><i class="fa fa-heart"></i></a>
                             <a href="#"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="product-price">
-                        <h3><span>$</span>99</h3>
+                        <h3><span>$</span>{{number_format($row->price)}}</h3>
                         <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="product-item">
-                    <div class="product-title">
-                        <a href="#">Product Name</a>
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="product-image">
-                        <a href="product-detail.html">
-                            <img src="{{asset('mainTemplate/img/product-2.jpg')}}" alt="Product Image">
-                        </a>
-                        <div class="product-action">
-                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                            <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                        <h3><span>$</span>99</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="product-item">
-                    <div class="product-title">
-                        <a href="#">Product Name</a>
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="product-image">
-                        <a href="product-detail.html">
-                            <img src="{{asset('mainTemplate/img/product-3.jpg')}}" alt="Product Image">
-                        </a>
-                        <div class="product-action">
-                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                            <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                        <h3><span>$</span>99</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="product-item">
-                    <div class="product-title">
-                        <a href="#">Product Name</a>
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="product-image">
-                        <a href="product-detail.html">
-                            <img src="{{asset('mainTemplate/img/product-4.jpg')}}" alt="Product Image">
-                        </a>
-                        <div class="product-action">
-                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                            <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                        <h3><span>$</span>99</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="product-item">
-                    <div class="product-title">
-                        <a href="#">Product Name</a>
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="product-image">
-                        <a href="product-detail.html">
-                            <img src="{{asset('mainTemplate/img/product-5.jpg')}}" alt="Product Image">
-                        </a>
-                        <div class="product-action">
-                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                            <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                        <h3><span>$</span>99</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -876,8 +786,24 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('mainTemplate/lib/easing/easing.min.js')}}"></script>
 <script src="{{asset('mainTemplate/lib/slick/slick.min.js')}}"></script>
-
 <!-- Template Javascript -->
 <script src="{{asset('mainTemplate/js/main.js')}}"></script>
+
+
+<script>
+function addCart(id) {
+
+    $.ajax({
+        url: "addCart/" + id,
+        method: 'get',
+        success: function (data) {
+            $('#change-cart-items').empty();
+            $('#change-cart-items').html(data);
+            $('#totalQtyProduct').text( $('#qtyCart-cart').val());
+            alertify.success('Added to Your Cart!');
+        }
+    })
+}
+</script>
 </body>
 </html>

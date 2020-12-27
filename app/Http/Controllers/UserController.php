@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePassword;
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -42,6 +45,20 @@ class UserController extends Controller
             $user->save();
             return $request;
 
+    }
+
+    public function addCart(Request $request, $id){
+        $product = Product::find($id);
+        if ($this->userCan('view-page-guest')){
+            if ($product != null){
+                $oldCart = Session('Cart') ? Session('Cart') : null;
+                $newCart = new Cart($oldCart);
+                $newCart->addCart($product, $id);
+                $request->session()->put('Cart', $newCart);
+            }
+            return view('shoppingCart.cart-list');
+        }
+        return redirect()->route('login');
     }
 
 }

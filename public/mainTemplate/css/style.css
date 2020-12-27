@@ -2452,5 +2452,9 @@ h2 {
 }
 .deleteProduct{
     position: relative;
-    right: -70px;
+    right: -60px;
+}
+
+.productImageFeather {
+    width: 200px; height: 290px
 }

@@ -55,8 +55,10 @@
                                             <td>{{number_format($row->price)}}</td>
                                             <td>{{$row->vendor}}</td>
                                             <td><img src="{{asset('storage/'. $row->image)}}" width="170" class="img-thumbnail"></td>
-                                            <td><textarea>{{$row->desc}}</textarea></td>
+                                            <td><textarea readonly>{{$row->desc}}</textarea></td>
                                             <td>{{$row->productCategory->name}}</td>
+                                            <td><a class='btn btn-danger'><i data-id="{{$row->id}}" class="fas fa-trash-alt deleteProduct"></i></a></td>
+                                            <td><a class='btn btn-info'><i data-id="{{$row->id}}" data-name="{{$row->name}}" data-price="{{$row->price}}" data-vendor="{{$row->vendor}}" data-desc="{{$row->desc}}" data-image="{{$row->image}}" class="fas fa-edit editProduct "></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

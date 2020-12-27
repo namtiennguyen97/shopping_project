@@ -5,7 +5,7 @@
         <tbody>
         @foreach(\Illuminate\Support\Facades\Session::get('Cart')->product as $item)
         <tr>
-            <td><img src="{{asset('storage/'.$item['productInfo']->image)}}" width="180" class="img img-thumbnail"></td>
+            <td><img src="{{asset('storage/'.$item['productInfo']->image)}}" style="width: 60px; height: 60px" class="img img-thumbnail"></td>
             <td>
                 <div>
                     <p>{{number_format($item['productInfo']->price)}} x {{$item['qty']}}</p>
