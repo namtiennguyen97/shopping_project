@@ -46,4 +46,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::get('/userRender',[\App\Http\Controllers\Admin\AdminController::class,'renderUser'])->name('render.user');
     Route::get('/deleteUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteUser'])->name('admin.delete.user');
     Route::post('/updateUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'editUser'])->name('admin.edit.user');
+    Route::post('/storeProduct',[\App\Http\Controllers\Admin\AdminController::class,'storeProduction'])->name('admin.store.product');
+    Route::get('/adminProduct',[\App\Http\Controllers\Admin\AdminController::class,'productIndex'])->name('admin.product.index');
 });

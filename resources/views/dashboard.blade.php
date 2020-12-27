@@ -148,26 +148,26 @@
                         <div class="row">
                             <div class="col-md-12">
                                 Old Password:
-                                <input class="form-control" type="password" required  placeholder="Current Password">
-
+                                <input class="form-control" id="currentPassword" name="currentPassword" type="password" required  placeholder="Current Password">
+                                <span id="showErrorsCRPassword" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 New Password:
-                                <input class="form-control @error('newPassword') is-invalid @enderror" id="newPassword" name="newPassword" type="text" required placeholder="New Password">
-                                @error('newPassword')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                                <input class="form-control" id="newPassword" name="newPassword" type="text" required placeholder="New Password">
+{{--                                show validate--}}
+                                <span id="showErrorsNewPassword" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 Confirm New Password:
                                 <input class="form-control" id="confirmNewPassword" name="confirmNewPassword" required type="text" placeholder="Confirm Password">
-                                @error('confirmNewPassword')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+{{--                               show validate--}}
+                                <span id="showErrorsCFPassword" class="text-danger"></span>
+
                             </div>
                             <div class="col-md-12">
-                                <button type="submit"  class="btn">Save Changes</button>
+                                <button type="submit"  class="btn">Change Password</button>
                             </div>
+
                         </div>
                         </form>
 
@@ -210,13 +210,42 @@
             url: "updatePassword/" + id,
             method: 'post',
             data: $('#changePassword').serialize(),
-            success: function () {
+            success: function (response) {
                 alertify.success("Password changed successfully!");
                 alertify.alert("ALERT","You have to re-Login");
                 window.location.reload();
             },
-            error: function (data) {
-                alertify.error("Something has wrong!");
+            error: function (response) {
+                console.log(response.responseJSON.errors.newPassword);
+                $('#showErrorsCRPassword').text(response.responseJSON.errors.currentPassword);
+                $('#showErrorsNewPassword').text(response.responseJSON.errors.newPassword);
+                $('#showErrorsCFPassword').text(response.responseJSON.errors.confirmNewPassword);
+                if(response.responseJSON.errors.newPassword){
+                    $('#newPassword').removeClass('is-valid');
+                    $('#newPassword').addClass('is-invalid');
+                }
+                else{
+                    $('#newPassword').removeClass('is-invalid');
+                    $('#newPassword').addClass('is-valid');
+                }
+                if(response.responseJSON.errors.confirmNewPassword){
+                    $('#confirmNewPassword').removeClass('is-valid');
+                    $('#confirmNewPassword').addClass('is-invalid');
+                }
+                else{
+                    $('#confirmNewPassword').removeClass('is-invalid');
+                    $('#confirmNewPassword').addClass('is-valid');
+                }
+                if(response.responseJSON.errors.currentPassword){
+                    $('#currentPassword').removeClass('is-valid');
+                    $('#currentPassword').addClass('is-invalid');
+                }
+                else{
+                    $('#currentPassword').removeClass('is-invalid');
+                    $('#currentPassword').addClass('is-valid');
+                }
+
+                alertify.error("Something has wrong! Please check again...");
             }
         });
     })

@@ -4,8 +4,13 @@
     <list default="true" id="10e8639e-eac0-4e23-9494-d3a753ef08e9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Categories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts/mainSideBar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts/mainSideBar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permisson/userManager.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permisson/userManager.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/permisson/productManager.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permisson/productManager.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +160,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -196,7 +201,8 @@
       <workItem from="1608692057886" duration="10902000" />
       <workItem from="1608825894263" duration="5466000" />
       <workItem from="1608876195436" duration="31728000" />
-      <workItem from="1608952490531" duration="27369000" />
+      <workItem from="1608952490531" duration="27992000" />
+      <workItem from="1609061040882" duration="7283000" />
     </task>
     <servers />
   </component>
@@ -211,18 +217,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1608974657717" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1608974355295">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1609002076906">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1608974355295" />
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1609002076906" />
     <state x="465" y="178" key="NewPhpClassDialog" timestamp="1608976189040">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="465" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1608976189040" />
-    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1608992691631">
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1609001511325">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1608992691631" />
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1609001511325" />
     <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1608953096329">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

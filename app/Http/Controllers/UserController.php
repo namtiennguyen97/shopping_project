@@ -12,7 +12,11 @@ class UserController extends Controller
 {
     public function updateUser(Request $request, $id)
     {
-//        User::find($id)->update($request->all());
+        $request->validate([
+            'currentPassword' => 'required|password|min:8|max:25',
+            'newPassword' => 'required|min:8|max:25',
+            'confirmNewPassword' => 'required|same:newPassword|min:8|max:25'
+        ]);
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->full_name = $request->input('full_name');
@@ -29,12 +33,14 @@ class UserController extends Controller
 //    }
     public function updatePassword(Request $request, $id){
         $request->validate([
-            'newPassword' => 'required|min:8',
-            'confirmNewPassword' => 'required|same:newPassword'
+            'currentPassword' => 'required|password|min:8|max:25',
+            'newPassword' => 'required|min:8|max:25',
+            'confirmNewPassword' => 'required|same:newPassword|min:8|max:25'
         ]);
             $user = User::find($id);
             $user->password = Hash::make($request->input('confirmNewPassword'));
             $user->save();
+            return $request;
 
     }
 

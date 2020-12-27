@@ -11,10 +11,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function storeProduct(Request $request)
-    {
 
-    }
 // render user in admin
     public function renderUser(){
         $user = User::all();
@@ -72,7 +69,24 @@ class AdminController extends Controller
 
     //Product controller
     public function productIndex(){
-        $product = Product::all();
-        return view('', compact('product'));
+        return view('admin.permisson.productManager');
+    }
+
+    public function storeProduction(Request $request){
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->vendor = $request->input('vendor');
+        $product->price = $request->input('price');
+        if ($request->hasFile('image')){
+            $image1 = $request->file('image');
+            $path = $image1->store('images','public');
+            $product->image = $path;
+        }
+        $product->desc = $request->input('desc');
+        $product->category_id = $request->input('category_id');
+        $product->save();
+//        return $product;
+        return redirect()->route('admin.product.index');
+
     }
 }
