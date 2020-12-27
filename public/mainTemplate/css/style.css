@@ -657,7 +657,7 @@ h2 {
     height: 100%;
     padding: 30px 15px;
     text-align: center;
-    background: #ffffff;
+    /*background: #ffffff;*/
 }
 
 .feature .feature-content i {
@@ -2457,4 +2457,23 @@ h2 {
 
 .productImageFeather {
     width: 200px; height: 290px
+}
+.displayAuth{
+    color: white;
+}
+
+.fc1 {
+    background-color: #e8f181;
+}
+
+.fc2{
+    background-color: #f1accb;
+}
+
+.fc4{
+    background-color: #47f15a;
+}
+
+.fc3{
+    background-color: #7bccf1;
 }

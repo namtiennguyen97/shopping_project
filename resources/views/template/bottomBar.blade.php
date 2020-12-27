@@ -25,7 +25,10 @@
                         {{--add data here--}}
                         <a class="btn cart">
                             <i class="fa fa-shopping-cart cart-show-list"></i>
-                            <span>(0)</span>
+                            @if(\Illuminate\Support\Facades\Session::has('Cart')!= null)
+                                <span class="totalQtyProduct">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
+                                    </span>
+                            @endif
 
                             <div class="dropdown-contentA">
                                 <div class="backGroundColor">
@@ -36,38 +39,36 @@
                                 <div id="change-cart-items">
                                     {{--                                start here--}}
 
-                                    <div class="shopping-cart">
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="180" class="img img-thumbnail"></td>
-                                                <td>
-                                                    <div>
-                                                        <p>3000 x 6</p>
-                                                        <h5>Blouse f</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </td>
-                                            </tr>
+                                    @if(\Illuminate\Support\Facades\Session::has('Cart') != null)
 
-                                            <tr>
-                                                <td><img src="{{asset('mainTemplate/img/category-2.jpg')}}" width="180" class="img img-thumbnail"></td>
-                                                <td>
-                                                    <div>
-                                                        <p>3000 x 6</p>
-                                                        <h5>Blouse hhfhffffffrf</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </td>
-                                            </tr>
+                                        <div class="shopping-cart">
+                                            <table>
+                                                <tbody>
+                                                @foreach(\Illuminate\Support\Facades\Session::get('Cart')->product as $item)
+                                                    <tr>
+                                                        <td><img src="{{asset('storage/'.$item['productInfo']->image)}}" style="width: 60px; height: 60px" class="img img-thumbnail"></td>
+                                                        <td>
+                                                            <div>
+                                                                <p>{{number_format($item['productInfo']->price)}} x {{$item['qty']}}</p>
+                                                                <h5>{{$item['productInfo']->name}}</h5>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <i class="fa fa-times deleteProduct" data-id="{{$item['productInfo']->id}}" aria-hidden="true"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <input id="qtyCart-cart" hidden type="number" value="{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}">
+                                                @endforeach
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </tbody>
+                                            </table>
+                                            <div class="select-total">
+                                                <span class="totalProduct">Total:{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}</span>
+                                                <h5>{{number_format(\Illuminate\Support\Facades\Session::get('Cart')->totalPrice)}}</h5>
+                                            </div>
+                                        </div>
+
+                                    @endif
 
                                 </div>
 
@@ -87,4 +88,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#change-cart-items').on('click', '.si-close .deleteProduct', function () {
+        $.ajax({
+            url: 'deleteCart/' + $(this).data('id'),
+            type: 'GET',
+            success: function (data) {
+                $('#change-cart-items').empty();
+                $('#change-cart-items').html(data);
+                $('#totalQtyProduct').text( $('#qtyCart-cart').val());
+                alertify.success('Delete Your Item!');
+            }
+        });
+    })
+</script>
 <!-- Bottom Bar End -->

@@ -15,11 +15,7 @@ class UserController extends Controller
 {
     public function updateUser(Request $request, $id)
     {
-        $request->validate([
-            'currentPassword' => 'required|password|min:8|max:25',
-            'newPassword' => 'required|min:8|max:25',
-            'confirmNewPassword' => 'required|same:newPassword|min:8|max:25'
-        ]);
+
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->full_name = $request->input('full_name');
@@ -59,6 +55,20 @@ class UserController extends Controller
             return view('shoppingCart.cart-list');
         }
         return redirect()->route('login');
+    }
+
+    public function deleteItemCart(Request $request,$id){
+        $oldCart = Session('Cart') ? Session('Cart') : null;
+        $newCart = new Cart($oldCart);
+        $newCart->deleteCart($id);
+        if (count($newCart->product)> 0){
+            $request->session()->put('Cart', $newCart);
+        }
+        else{
+            $request->session()->forget('Cart');
+        }
+
+        return view('shoppingCart.cart-list');
     }
 
 }
