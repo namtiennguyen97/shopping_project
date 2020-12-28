@@ -116,14 +116,17 @@
                                     <div class="col-md-6">
                                         Name:
                                         <input class="form-control" id="editName" name="name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->name}}" placeholder="Name">
+                                        <span id="showErrorName" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Full Name:
                                         <input class="form-control" id="editFullName" name="full_name" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->full_name}}" placeholder="Full Name">
+                                        <span id="showErrorFullName" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Phone Number
                                         <input class="form-control" id="editPhone" name="phone" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->phone}}" placeholder="Phone Number">
+                                        <span id="showErrorPhone" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Email
@@ -132,6 +135,7 @@
                                     <div class="col-md-12">
                                         Address
                                         <input class="form-control" id="editAddress" name="address" type="text" value="{{\Illuminate\Support\Facades\Auth::user()->address}}" placeholder="Address">
+                                        <span id="showErrorAddress" class="text-danger"></span>
                                     </div>
                                     <input hidden id="showId" data-id="{{\Illuminate\Support\Facades\Auth::user()->id}}">
                                     <div class="col-md-12">
@@ -197,14 +201,74 @@
                 $('#editFullName').val(data.full_name);
                 $('#editAddress').val(data.address);
                 $('#accountName').text(data.name);
-                alertify.success("Updated successfully!");
 
+                // ko hien thi loi nua
+                $('#showErrorName').text("");
+                $('#showErrorFullName').text("");
+                $('#showErrorPhone').text("");
+                $('#showErrorAddress').text("");
+                //cac o input ko hien thi in-invalid nua
+
+                $('#editName').removeClass('is-invalid');
+                $('#editName').addClass('is-valid');
+
+                $('#editFullName').removeClass('is-invalid');
+                $('#editFullName').addClass('is-valid');
+
+                $('#editPhone').removeClass('is-invalid');
+                $('#editPhone').addClass('is-valid');
+
+                $('#editAddress').removeClass('is-invalid');
+                $('#editAddress').addClass('is-valid');
+
+                alertify.success("Updated successfully!");
+            },
+            error: function(response){
+                console.log(response);
+                $('#showErrorName').text(response.responseJSON.errors.name);
+                $('#showErrorAddress').text(response.responseJSON.errors.address);
+                $('#showErrorFullName').text(response.responseJSON.errors.full_name);
+                $('#showErrorPhone').text(response.responseJSON.errors.phone);
+                if (response.responseJSON.errors.name){
+                    $('#editName').removeClass('is-valid');
+                    $('#editName').addClass('is-invalid');
+                }
+                else{
+                    $('#editName').removeClass('is-invalid');
+                    $('#editName').addClass('is-valid');
+                    $('#showErrorName').text("");
+                }
+                if (response.responseJSON.errors.full_name){
+                    $('#editFullName').removeClass('is-valid');
+                    $('#editFullName').addClass('is-invalid');
+                }
+                else{
+                    $('#editFullName').removeClass('is-invalid');
+                    $('#editFullName').addClass('is-valid');
+                    $('#showErrorFullName').text("");
+                }
+                if(response.responseJSON.errors.phone){
+                    $('#editPhone').removeClass('is-valid');
+                    $('#editPhone').addClass('is-invalid');
+                }else{
+                    $('#editPhone').removeClass('is-invalid');
+                    $('#editPhone').addClass('is-valid');
+                    $('#showErrorPhone').text("");
+                }
+                if (response.responseJSON.errors.address){
+                    $('#editAddress').removeClass('is-valid');
+                    $('#editAddress').addClass('is-invalid');
+                }else{
+                    $('#editAddress').removeClass('is-invalid');
+                    $('#editAddress').addClass('is-valid');
+                    $('#showErrorAddress').text("");
+                }
             }
         });
     });
 
     $('#changePassword').on('submit', function (e) {
-        e.preventDefault()
+        e.preventDefault();
         let id = $('#showId').data('id');
         $.ajax({
             url: "updatePassword/" + id,
@@ -217,32 +281,38 @@
             },
             error: function (response) {
                 console.log(response.responseJSON.errors.newPassword);
-                $('#showErrorsCRPassword').text(response.responseJSON.errors.currentPassword);
-                $('#showErrorsNewPassword').text(response.responseJSON.errors.newPassword);
-                $('#showErrorsCFPassword').text(response.responseJSON.errors.confirmNewPassword);
                 if(response.responseJSON.errors.newPassword){
                     $('#newPassword').removeClass('is-valid');
                     $('#newPassword').addClass('is-invalid');
+                    $('#showErrorsNewPassword').text(response.responseJSON.errors.newPassword);
                 }
                 else{
                     $('#newPassword').removeClass('is-invalid');
                     $('#newPassword').addClass('is-valid');
+                    $('#showErrorsNewPassword').text("");
                 }
                 if(response.responseJSON.errors.confirmNewPassword){
                     $('#confirmNewPassword').removeClass('is-valid');
                     $('#confirmNewPassword').addClass('is-invalid');
+
+                    $('#showErrorsCFPassword').text(response.responseJSON.errors.confirmNewPassword);
                 }
                 else{
                     $('#confirmNewPassword').removeClass('is-invalid');
                     $('#confirmNewPassword').addClass('is-valid');
+                    $('#showErrorsCFPassword').text("");
                 }
                 if(response.responseJSON.errors.currentPassword){
                     $('#currentPassword').removeClass('is-valid');
                     $('#currentPassword').addClass('is-invalid');
+
+                    $('#showErrorsCRPassword').text(response.responseJSON.errors.currentPassword);
                 }
                 else{
                     $('#currentPassword').removeClass('is-invalid');
                     $('#currentPassword').addClass('is-valid');
+
+                    $('#showErrorsCRPassword').text("");
                 }
 
                 alertify.error("Something has wrong! Please check again...");

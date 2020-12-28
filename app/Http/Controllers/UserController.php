@@ -15,7 +15,12 @@ class UserController extends Controller
 {
     public function updateUser(Request $request, $id)
     {
-
+        $request->validate([
+           'name' => 'min:3|max:15|required',
+            'full_name' => 'min:6|max:20|required',
+            'phone' =>'numeric|required',
+            'address' => 'required|max:40'
+        ]);
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->full_name = $request->input('full_name');
