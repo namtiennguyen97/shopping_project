@@ -52,3 +52,5 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::post('/storeProduct',[\App\Http\Controllers\Admin\AdminController::class,'storeProduction'])->name('admin.store.product');
     Route::get('/adminProduct',[\App\Http\Controllers\Admin\AdminController::class,'productIndex'])->name('admin.product.index');
 });
+
+
