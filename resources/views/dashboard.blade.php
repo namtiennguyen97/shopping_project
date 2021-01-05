@@ -434,10 +434,11 @@
             success: function (data) {
 
                 alertify.success('Have fun ^^');
-                $('#showPost').append(" <img src=\"{{asset('storage/images/001-fix.jpg')}}\"\n" +
-                    " class=\"img-thumbnail avatar-comment\" width=\"40\" alt=\"image\">" +
-                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>" +
-                    "<a>" + data.created_at + "</a>");
+                $('#showPost').append("<img src='public/storage/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                    "<a><b>"+ data.name +"</b></a>"+
+                    " <a>"+ data.created_at +"</a>" +
+                    " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>");
             }
         })
     })
