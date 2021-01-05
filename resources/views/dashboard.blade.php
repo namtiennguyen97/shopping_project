@@ -69,6 +69,7 @@
                             <div id="showPost">
                                 @if(\App\Models\Post::all() != null)
                                     @foreach(\App\Models\Post::all() as $comment)
+                                        @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
                                         <img src="{{asset('storage/images/001-fix.jpg')}}"
                                              class="img-thumbnail avatar-comment" width="40" alt="image">
                                         <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
@@ -76,7 +77,7 @@
                                         <button class="btn btn-danger btn-del-post" data-id="{{$comment->id}}"><i class="fas fa-trash-alt"></i>
                                         </button>
                                         <textarea class="form-control" readonly>{{$comment->comment}}</textarea>
-
+                                        @endif
                                     @endforeach
                                 @else
                                     <h6>No comment</h6>
@@ -433,7 +434,9 @@
             success: function (data) {
 
                 alertify.success('Have fun ^^');
-                $('#showPost').append("<textarea class='form-control' readonly>" + data.comment + "</textarea>" +
+                $('#showPost').append(" <img src=\"{{asset('storage/images/001-fix.jpg')}}\"\n" +
+                    " class=\"img-thumbnail avatar-comment\" width=\"40\" alt=\"image\">" +
+                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>" +
                     "<a>" + data.created_at + "</a>");
             }
         })
