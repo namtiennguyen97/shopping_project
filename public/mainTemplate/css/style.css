@@ -2483,3 +2483,33 @@ h2 {
 .btn-register{
     background-color: #f1960a;
 }
+
+.user-avatar{
+float: left;
+
+}
+
+.form-post{
+    border-color: #3f83f8;
+}
+.border-post{
+    background-color: #6c9f8a;
+
+}
+/*.btn-post{*/
+/*    border-radius: 10%;*/
+/*    position: center;*/
+/*    */
+/*}*/
+.all-post-form{
+    background-color: #e88143;
+}
+.btn-del-post{
+    position: relative;
+    float: right;
+}
+
+.avatar-comment{
+    position: relative;
+    float: left;
+}

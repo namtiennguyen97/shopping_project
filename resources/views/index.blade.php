@@ -82,7 +82,7 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="nav-link">{{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                                <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail" width="40" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
                             @else
                             <a href="{{ route('login') }}" class="displayAuth" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
                             <a>/</a>
@@ -129,8 +129,10 @@
                             <i class="fa fa-shopping-cart cart-show-list"></i>
 
                                 @if(\Illuminate\Support\Facades\Session::has('Cart')!= null)
-                                <span class="totalQtyProduct">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
+                                <span id="total-Qty-Product">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
                                     </span>
+                            @else
+                                <span id="total-Qty-Product">0</span>
                                     @endif
 
 
@@ -793,7 +795,8 @@ function addCart(id) {
         success: function (data) {
             $('#change-cart-items').empty();
             $('#change-cart-items').html(data);
-            $('#totalQtyProduct').text($('#qtyCart-cart').val());
+            $('#total-Qty-Product').text($('#qtyCart-cart').val());
+            console.log($('#qtyCart-cart').val());
             alertify.success('Added to Your Cart!');
         }
     })
@@ -806,7 +809,8 @@ function addCart(id) {
             success: function (data) {
                 $('#change-cart-items').empty();
                 $('#change-cart-items').html(data);
-                $('.totalQtyProduct').text( $('#qtyCart-cart').val());
+                $('#total-Qty-Product').text($('#qtyCart-cart').val());
+                console.log($('#qtyCart-cart').val());
                 alertify.success('Delete Your Item!');
             }
         });

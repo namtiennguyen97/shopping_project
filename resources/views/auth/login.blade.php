@@ -115,7 +115,7 @@
     </div>
 </div>
 <!-- Login End -->
-
+@include('template.bottomFooterLink')
 
 
 

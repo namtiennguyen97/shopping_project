@@ -8,7 +8,7 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav mr-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="{{route('index')}}" class="nav-item nav-link active">Home</a>
                     <a href="product-list.html" class="nav-item nav-link">Products</a>
                     <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
                     <a href="cart.html" class="nav-item nav-link">Cart</a>
@@ -27,7 +27,9 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
+                                <a><img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
                                 <a href="{{ url('/dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountName">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+
                                 <div class="dropdown-menu">
 
                                     <a href="{{ route('profile.show') }}" class="dropdown-item">Profile <i class="fas fa-user"></i></a>
