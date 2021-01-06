@@ -2513,3 +2513,7 @@ float: left;
     position: relative;
     float: left;
 }
+.btn-edit-post{
+    position: relative;
+    float: right;
+}

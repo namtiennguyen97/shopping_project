@@ -41,6 +41,8 @@ Route::get('/deleteCart/{id}', [\App\Http\Controllers\UserController::class, 'de
 Route::get('/post/',[\App\Http\Controllers\PostController::class,'showPost'])->name('post.index');
 Route::post('/post/create',[\App\Http\Controllers\PostController::class,'addPost'])->name('post.create');
 Route::get('/post/destroy/{id}',[\App\Http\Controllers\PostController::class,'destroy'])->name('post.destroy');
+Route::post('/post/update/{id}',[\App\Http\Controllers\PostController::class,'updatePost'])->name('post.update');
+Route::get('/showOnePost/{id}',[\App\Http\Controllers\PostController::class,'showOnePost'])->name('showPost');
 
 //Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'IDChangePassword'])->name('id_user');
 

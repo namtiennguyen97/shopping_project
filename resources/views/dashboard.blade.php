@@ -70,13 +70,16 @@
                                 @if(\App\Models\Post::all() != null)
                                     @foreach(\App\Models\Post::all() as $comment)
                                         @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
-                                        <img src="{{asset('storage/images/001-fix.jpg')}}"
-                                             class="img-thumbnail avatar-comment" width="40" alt="image">
-                                        <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
-                                        <a>{{$comment->created_at}}</a>
-                                        <button class="btn btn-danger btn-del-post" data-id="{{$comment->id}}"><i class="fas fa-trash-alt"></i>
-                                        </button>
-                                        <textarea class="form-control" readonly>{{$comment->comment}}</textarea>
+                                            <div class="user-post{{$comment->id}}">
+                                                <img src="{{asset('storage/images/001-fix.jpg')}}"
+                                                     class="img-thumbnail avatar-comment" width="40" alt="image">
+                                                <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
+                                                <a>{{$comment->created_at}}</a>
+                                                <button class="btn btn-info btn-edit-post" data-id="{{$comment->id}}"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-del-post" data-id="{{$comment->id}}"><i class="fas fa-trash-alt"></i>
+                                                </button>
+                                                <textarea class="form-control" readonly>{{$comment->comment}}</textarea>
+                                            </div>
                                         @endif
                                     @endforeach
                                 @else
@@ -85,6 +88,32 @@
                             </div>
                         </div>
                         {{--end post comment--}}
+
+{{--                        Modal edit comment--}}
+                    <!-- Modal edit comment -->
+                        <div class="modal fade" id="modalEditPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit your post</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form id="editPostForm">
+                                        @csrf
+                                    <div class="modal-body">
+                                        <textarea class="form-control" id="showEditComment" placeholder="Comment here..."name="comment"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+{{--                        end Modal edit comment--}}
 
                     </div>
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
@@ -254,7 +283,9 @@
 
 {{--end my account--}}
 
-
+{{--show user name--}}
+<input id="authUserName" hidden value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+{{--end show user name--}}
 <script>
 
     $('#updateUserForm').on('submit', function (e) {
@@ -435,13 +466,14 @@
 
                 alertify.success('Have fun ^^');
                 $('#showPost').append("<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
-                    "<a><b>"+ data.name +"</b></a>"+
+                    "<a><b>"+$('#authUserName').val() +"</b></a>"+
                     " <a>"+ data.created_at +"</a>" +
+                    "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
                     " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
                     "<textarea class='form-control' readonly>" + data.comment + "</textarea>");
             }
         })
-    })
+    });
 
     $('#showPost').on('click','.btn-del-post', function (e) {
         e.preventDefault();
@@ -453,4 +485,44 @@
             }
         });
     })
+
+    //hien thi modal edit post
+    let editPostId;
+    $('#showPost').on('click','.btn-edit-post', function () {
+        editPostId = $(this).data('id');
+        $('#modalEditPost').modal('show');
+        $.ajax({
+            url: "showOnePost/" + editPostId ,
+            method: 'get',
+            success: function (data) {
+                console.log(data);
+                $('#showEditComment').val(data.comment);
+            }
+        });
+    });
+    //edit post method form
+
+    $('#editPostForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "post/update/" + editPostId,
+            method: 'post',
+            data: $('#editPostForm').serialize(),
+            success: function (data) {
+            console.log(data.comment);
+            alertify.success("Updated");
+                $('#modalEditPost').modal('hide');
+                // $('.user-post' + data.id).empty();
+                $('.user-post' + data.id).replaceWith("<div class='user-post "+ data.id+"'>" +
+                    "<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                    "<a><b>"+ $('#authUserName').val() +"</b></a>"+
+                    " <a>"+ data.created_at +"</a>" +
+                    "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
+                    " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                    "</div> ");
+            }
+        });
+    })
+
 </script>
