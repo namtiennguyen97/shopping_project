@@ -539,7 +539,7 @@
             alertify.success("Updated");
                 $('#modalEditPost').modal('hide');
                 // $('.user-post' + data.id).empty();
-                $('.user-post' + data.id).replaceWith("<div class='user-post "+ data.id+"'>" +
+                $('.user-post' + data.id).replaceWith("<div class='user-post "+data.id+"'>" +
                     "<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
                     "<a><b>"+ $('#authUserName').val() +"</b></a>"+
                     " <a>"+ data.created_at +"</a>" +
