@@ -465,12 +465,14 @@
             success: function (data) {
 
                 alertify.success('Have fun ^^');
-                $('#showPost').append("<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
-                    "<a><b>"+$('#authUserName').val() +"</b></a>"+
+                $('#showPost').append("<div class='user-post"+data.id+"'>" +
+                    "<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                    "<a><b>"+ $('#authUserName').val() +"</b></a>"+
                     " <a>"+ data.created_at +"</a>" +
                     "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
                     " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
-                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>");
+                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                    "</div> ");
             }
         })
     });
@@ -480,11 +482,13 @@
         $.ajax({
             url: '/post/destroy/' + $(this).data('id'),
             method: 'get',
-            success: function () {
+            success: function (data) {
+                console.log(data.id);
+                $('.user-post' + data.id).remove();
                 alertify.success("Deleted!");
             }
         });
-    })
+    });
 
     //hien thi modal edit post
     let editPostId;

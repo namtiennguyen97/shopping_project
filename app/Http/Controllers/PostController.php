@@ -20,7 +20,9 @@ class PostController extends Controller
         return $post;
     }
     public function destroy($id){
-        Post::destroy($id);
+       $post = Post::find($id);
+       $post->delete();
+       return response()->json($post);
     }
     public function updatePost(Request $request, $id){
         $post = Post::find($id);
