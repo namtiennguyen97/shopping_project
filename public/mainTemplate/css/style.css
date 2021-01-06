@@ -2517,3 +2517,10 @@ float: left;
     position: relative;
     float: right;
 }
+/*.dashboard{*/
+/*    width: 50%;*/
+/*}*/
+.userDesc{
+   border-color: #3f83f8;
+
+}

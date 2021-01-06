@@ -41,20 +41,42 @@
                          aria-labelledby="dashboard-nav">
                         <h4>{{\Illuminate\Support\Facades\Auth::user()->name}} Dashboard</h4>
                         <p>
+                            <div class="row">
+                            <div class="col-md-4 dashboard">
+                                <img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail" width="200"
+                                     alt="image">
+                            </div>
+                            <div class="col-md-4">
+                               <b>About Dashboard:</b> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>You can change/update your profile detail, also can post some review/comment...</textarea>
+                            </div>
 
-                        <div class="col">
-                            <img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail" width="200"
-                                 alt="image">
+                            <div class="col-md-4">
+                                <b>About {{\Illuminate\Support\Facades\Auth::user()->name}}:</b> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>{{\Illuminate\Support\Facades\Auth::user()->desc}}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <b>Email: <i class="fas fa-envelope-square"></i></b>  <input readonly class="form-control"
+                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->email}}">
+                            </div>
+                            <div class="col-md-4">
+                                <b>Time Purchased: <i class="fas fa-shopping-cart"></i></b>  <input readonly class="form-control"
+                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->full_name}}">
+                            </div>
+                            <div class="col-md-4">
+                                <b>Profile View: <i class="fas fa-users"></i></b>  <input readonly class="form-control"
+                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->phone}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <b>Total $ Cost: <i class="fas fa-money-check-alt"></i></b>  <input readonly class="form-control"
+                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->address}}">
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="col">
-                            <input readonly class="form-control"
-                                   value=" {{\Illuminate\Support\Facades\Auth::user()->email}}">
-                        </div>
+
+
 
                         {{--                        Post comment--}}
                         <div class="col border-post">
-                            <h6 style="text-align: center"><b>Comment</b></h6>
+                            <h6 style="text-align: center"><b>Comment <i class="far fa-comment-dots"></i></b></h6>
                             <form id="form-post">
                                 @csrf
                                 <textarea class="form-control form-post" name="comment"
@@ -65,7 +87,7 @@
 
                         {{--end post comment--}}
                         <div class="col all-post-form">
-                            <h5 style="text-align: center"><b>All your post:</b></h5>
+                            <h5 style="text-align: center"><b>All your post: <i class="far fa-comments"></i></b></h5>
                             <div id="showPost">
                                 @if(\App\Models\Post::all() != null)
                                     @foreach(\App\Models\Post::all() as $comment)
