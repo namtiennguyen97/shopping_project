@@ -4,6 +4,7 @@
     <list default="true" id="10e8639e-eac0-4e23-9494-d3a753ef08e9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +201,8 @@
       <workItem from="1609165712546" duration="9015000" />
       <workItem from="1609225682486" duration="5712000" />
       <workItem from="1609849978029" duration="520000" />
-      <workItem from="1609851539411" duration="14694000" />
+      <workItem from="1609851539411" duration="14938000" />
+      <workItem from="1609903842467" duration="3745000" />
     </task>
     <servers />
   </component>
@@ -227,9 +229,9 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1609168896757" />
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1609852907736">
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1609904331157">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1609852907736" />
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1609904331157" />
   </component>
 </project>
