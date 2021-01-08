@@ -92,7 +92,10 @@ class UserController extends Controller
             $user->image = $path;
         }
         $user->save();
-        return redirect()->route('dashboard');
+        return response()->json([
+            'requested_image'=> '<a><img src="storage/'.$user->image.'" class="img-thumbnail user-avatar" width="40" alt="image" /></a>',
+            'dashboard_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-dashboard" width="40" alt="image" />'
+        ]);
     }
 
 }

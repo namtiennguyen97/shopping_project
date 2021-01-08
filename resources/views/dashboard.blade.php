@@ -43,8 +43,10 @@
                         <p>
                             <div class="row">
                             <div class="col-md-4 dashboard">
-                                <img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail avatar-dashboard"
-                                     alt="image">
+                                <div id="user-avatar-dashboard">
+                                    <img src="storage/{{\Illuminate\Support\Facades\Auth::user()->image}}" class="img-thumbnail avatar-dashboard"
+                                         alt="image">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                <b>About Dashboard:</b> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>You can change/update your profile detail, also can post some review/comment...</textarea>
@@ -93,8 +95,10 @@
                                     @foreach(\App\Models\Post::all() as $comment)
                                         @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
                                             <div class="user-post{{$comment->id}}">
+
                                                 <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
                                                      class="img-thumbnail avatar-comment" width="40" alt="image">
+
                                                 <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
                                                 <a>{{$comment->created_at}}</a>
                                                 <button class="btn btn-info btn-edit-post" data-id="{{$comment->id}}"><i class="fas fa-edit"></i></button>
@@ -224,7 +228,7 @@
                                 <img src='{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
                             </div>
                             <div class="col-lg-12">
-                                <form id="avatarForm" method="post" action="{{route('user.update.avatar', \Illuminate\Support\Facades\Auth::user()->id)}}" enctype="multipart/form-data">
+                                <form id="avatarForm" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <label class="btn btn-default btn-file uploadImage">
                                         Upload <input type="file" name="userImage" onchange="loadImage(event)" id="imgSrc" style="display: none;">
@@ -589,22 +593,29 @@ show user image src
     }
 
     // update avatar
-    // $('#avatarForm').on('submit', function (e) {
-    //     e.preventDefault();
-    //
-    //     $.ajax({
-    //         url: "updateUserAvatar/"+ $('#showId').data('id'),
-    //         method: 'post',
-    //         data: new FormData(this),
-    //         contentType: false,
-    //         cache: false,
-    //         processData: false,
-    //
-    //         success: function () {
-    //             alertify.success("Avatar changed!");
-    //         }
-    //
-    //     });
-    // })
+    $('#avatarForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "updateUserAvatar/"+ $('#showId').data('id'),
+            method: 'post',
+            data: new FormData(this),
+            dataType: 'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function (data) {
+                console.log(data);
+                $('#load-dashboard-avatar').empty();
+                $('#load-dashboard-avatar').html(data.requested_image);
+                $('#user-avatar-dashboard').empty();
+                $('#user-avatar-dashboard').html(data.dashboard_image);
+                alertify.success("Avatar changed!");
+            }
+        });
+    })
+    // function render image after change
+
 
 </script>
