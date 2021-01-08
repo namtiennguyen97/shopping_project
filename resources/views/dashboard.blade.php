@@ -95,9 +95,11 @@
                                     @foreach(\App\Models\Post::all() as $comment)
                                         @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
                                             <div class="user-post{{$comment->id}}">
+                                                <div class="avatar-comment">
+                                                    <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
+                                                         class="img-thumbnail avatar-comment" alt="image">
+                                                </div>
 
-                                                <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
-                                                     class="img-thumbnail avatar-comment" width="40" alt="image">
 
                                                 <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
                                                 <a>{{$comment->created_at}}</a>
@@ -611,6 +613,8 @@ show user image src
                 $('#load-dashboard-avatar').html(data.requested_image);
                 $('#user-avatar-dashboard').empty();
                 $('#user-avatar-dashboard').html(data.dashboard_image);
+                $('.avatar-comment').empty();
+                $('.avatar-comment').html(data.comment_image);
                 alertify.success("Avatar changed!");
             }
         });

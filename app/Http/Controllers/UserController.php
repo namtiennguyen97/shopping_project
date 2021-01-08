@@ -94,7 +94,8 @@ class UserController extends Controller
         $user->save();
         return response()->json([
             'requested_image'=> '<a><img src="storage/'.$user->image.'" class="img-thumbnail user-avatar" width="40" alt="image" /></a>',
-            'dashboard_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-dashboard" width="40" alt="image" />'
+            'dashboard_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-dashboard" width="40" alt="image" />',
+            'comment_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-comment" width="40" alt="image" />'
         ]);
     }
 
