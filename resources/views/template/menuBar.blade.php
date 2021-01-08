@@ -27,7 +27,7 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
-                                <a><img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
+                                <a><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
                                 <a href="{{ url('/dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountName">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
 
                                 <div class="dropdown-menu">

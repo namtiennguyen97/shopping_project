@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -74,6 +75,24 @@ class UserController extends Controller
         }
 
         return view('shoppingCart.cart-list');
+    }
+
+    //upload Avatar
+    public function storeUserAvatar(Request $request, $id){
+        $user = User::find($id);
+
+        if ($request->hasFile('userImage')){
+            //xoa anh cu neu co
+            $currentImage = $user->image;
+            if ($currentImage){
+                Storage::delete('/public/'. $currentImage);
+            }
+            $image1 = $request->file('userImage');
+            $path = $image1->store('images','public');
+            $user->image = $path;
+        }
+        $user->save();
+        return redirect()->route('dashboard');
     }
 
 }

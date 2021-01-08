@@ -43,6 +43,7 @@ Route::post('/post/create',[\App\Http\Controllers\PostController::class,'addPost
 Route::get('/post/destroy/{id}',[\App\Http\Controllers\PostController::class,'destroy'])->name('post.destroy');
 Route::post('/post/update/{id}',[\App\Http\Controllers\PostController::class,'updatePost'])->name('post.update');
 Route::get('/showOnePost/{id}',[\App\Http\Controllers\PostController::class,'showOnePost'])->name('showPost');
+Route::post('/updateUserAvatar/{id}',[\App\Http\Controllers\UserController::class,'storeUserAvatar'])->name('user.update.avatar');
 
 //Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'IDChangePassword'])->name('id_user');
 

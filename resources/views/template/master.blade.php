@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="eCommerce HTML Template Free Download" name="keywords">
     <meta content="eCommerce HTML Template Free Download" name="description">
-
+    <meta name="_token" content="{{csrf_token()}}">
     <!-- Favicon -->
     <link href="{{asset('mainTemplate/img/favicon.ico')}}" rel="icon">
 
@@ -40,6 +40,13 @@
     <link href="{{asset('mainTemplate/css/style.css')}}" rel="stylesheet">
 </head>
 <body>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
+</script>
 <!-- Top bar Start -->
 <div class="top-bar">
     <div class="container-fluid">

@@ -82,12 +82,12 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail" width="40" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                                <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail index-user-avatar" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
                             @else
                             <a href="{{ route('login') }}" class="displayAuth" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
                             <a>/</a>
                                     @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="displayAuth">Đăng kí</a>
+                            <a href="{{ route('login') }}" class="displayAuth">Đăng kí</a>
                                     @endif
                                     @endauth
                     </div>

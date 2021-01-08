@@ -43,7 +43,7 @@
                         <p>
                             <div class="row">
                             <div class="col-md-4 dashboard">
-                                <img src="{{asset('storage/images/001-fix.jpg')}}" class="img-thumbnail" width="200"
+                                <img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail avatar-dashboard"
                                      alt="image">
                             </div>
                             <div class="col-md-4">
@@ -93,7 +93,7 @@
                                     @foreach(\App\Models\Post::all() as $comment)
                                         @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
                                             <div class="user-post{{$comment->id}}">
-                                                <img src="{{asset('storage/images/001-fix.jpg')}}"
+                                                <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
                                                      class="img-thumbnail avatar-comment" width="40" alt="image">
                                                 <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
                                                 <a>{{$comment->created_at}}</a>
@@ -216,7 +216,27 @@
 
                     {{--                    acount--}}
                     <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
-                        <h4>Account Details</h4>
+                        <h4>Account Details / Edit</h4>
+
+{{--                        update Avatar--}}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img src='{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
+                            </div>
+                            <div class="col-lg-12">
+                                <form id="avatarForm" method="post" action="{{route('user.update.avatar', \Illuminate\Support\Facades\Auth::user()->id)}}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="btn btn-default btn-file uploadImage">
+                                        Upload <input type="file" name="userImage" onchange="loadImage(event)" id="imgSrc" style="display: none;">
+                                    </label>
+                                    <label class="btn btn-default btn-file uploadImageBtn">
+                                        Save <input type="submit" style="display: none">
+                                    </label>
+                                </form>
+                            </div>
+                        </div>
+
+{{--    Update account--}}
                         <div id="appendData">
                             <form id="updateUserForm">
                                 @csrf
@@ -308,6 +328,8 @@
 {{--show user name--}}
 <input id="authUserName" hidden value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
 {{--end show user name--}}
+show user image src
+<input hidden id="userAvatarSrc" value="{{\Illuminate\Support\Facades\Auth::user()->image}}">
 <script>
 
     $('#updateUserForm').on('submit', function (e) {
@@ -488,7 +510,7 @@
 
                 alertify.success('Have fun ^^');
                 $('#showPost').append("<div class='user-post"+data.id+"'>" +
-                    "<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                    "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
                     "<a><b>"+ $('#authUserName').val() +"</b></a>"+
                     " <a>"+ data.created_at +"</a>" +
                     "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
@@ -501,15 +523,21 @@
 
     $('#showPost').on('click','.btn-del-post', function (e) {
         e.preventDefault();
-        $.ajax({
-            url: '/post/destroy/' + $(this).data('id'),
-            method: 'get',
-            success: function (data) {
-                console.log(data.id);
-                $('.user-post' + data.id).remove();
-                alertify.success("Deleted!");
-            }
-        });
+        let r = confirm('Do you want to delete this?');
+        if (r == true){
+            $.ajax({
+                url: '/post/destroy/' + $(this).data('id'),
+                method: 'get',
+
+                success: function (data) {
+                    console.log(data.id);
+                    $('.user-post' + data.id).remove();
+
+                    alertify.success("Deleted!");
+                }
+            });
+        }
+
     });
 
     //hien thi modal edit post
@@ -539,16 +567,44 @@
             alertify.success("Updated");
                 $('#modalEditPost').modal('hide');
                 // $('.user-post' + data.id).empty();
-                $('.user-post' + data.id).replaceWith("<div class='user-post "+data.id+"'>" +
-                    "<img src='storage/images/001-fix.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                $('.user-post' + data.id).replaceWith("<div class='user-post"+data.id+"'>" +
+                    "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
                     "<a><b>"+ $('#authUserName').val() +"</b></a>"+
                     " <a>"+ data.created_at +"</a>" +
                     "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
                     " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
                     "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
-                    "</div> ");
+                    "</div>");
             }
         });
-    })
+    });
+
+    // preview avatar image
+    function loadImage(event) {
+        let output = document.getElementById('previewUserAvatar');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    }
+
+    // update avatar
+    // $('#avatarForm').on('submit', function (e) {
+    //     e.preventDefault();
+    //
+    //     $.ajax({
+    //         url: "updateUserAvatar/"+ $('#showId').data('id'),
+    //         method: 'post',
+    //         data: new FormData(this),
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //
+    //         success: function () {
+    //             alertify.success("Avatar changed!");
+    //         }
+    //
+    //     });
+    // })
 
 </script>
