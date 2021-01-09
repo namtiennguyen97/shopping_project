@@ -44,8 +44,12 @@
                             <div class="row">
                             <div class="col-md-4 dashboard">
                                 <div id="user-avatar-dashboard">
+                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                        <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail avatar-dashboard" alt="image">
+                                    @else
                                     <img src="storage/{{\Illuminate\Support\Facades\Auth::user()->image}}" class="img-thumbnail avatar-dashboard"
                                          alt="image">
+                                        @endif
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -53,7 +57,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <b>About {{\Illuminate\Support\Facades\Auth::user()->name}}:</b> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>{{\Illuminate\Support\Facades\Auth::user()->desc}}</textarea>
+                                <b>About {{\Illuminate\Support\Facades\Auth::user()->name}}:</b><i class="btn btn-success fas fa-edit desc-edit"></i> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>{{\Illuminate\Support\Facades\Auth::user()->desc}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <b>Email: <i class="fas fa-envelope-square"></i></b>  <input readonly class="form-control"
@@ -96,8 +100,12 @@
                                         @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
                                             <div class="user-post{{$comment->id}}">
                                                 <div class="avatar-comment">
+                                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                                        <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail avatar-comment" alt="image">
+                                                        @else
                                                     <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
                                                          class="img-thumbnail avatar-comment" alt="image">
+                                                        @endif
                                                 </div>
 
 
@@ -227,7 +235,11 @@
 {{--                        update Avatar--}}
                         <div class="row">
                             <div class="col-lg-12">
+                                @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                    <img src='{{asset('storage/images/user-avatar.jpg')}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
+                                    @else
                                 <img src='{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
+                                    @endif
                             </div>
                             <div class="col-lg-12">
                                 <form id="avatarForm" method="post" enctype="multipart/form-data">
@@ -335,7 +347,7 @@
 <input id="authUserName" hidden value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
 {{--end show user name--}}
 show user image src
-<input hidden id="userAvatarSrc" value="{{\Illuminate\Support\Facades\Auth::user()->image}}">
+<input hidden id="userAvatarSrc" value="{{\Illuminate\Support\Facades\Auth::user()->image}}" data-image="{{\Illuminate\Support\Facades\Auth::user()->image}}">
 <script>
 
     $('#updateUserForm').on('submit', function (e) {
@@ -505,6 +517,9 @@ show user image src
     {{--            }--}}
     {{--        });--}}
     {{--    }--}}
+    //     if(!$("#userAvatarSrc").val()){
+    //         console.log('Null');
+    // }
 
     $('#form-post').on('submit', function (e) {
         e.preventDefault();
@@ -514,15 +529,30 @@ show user image src
             data: $('#form-post').serialize(),
             success: function (data) {
 
-                alertify.success('Have fun ^^');
-                $('#showPost').append("<div class='user-post"+data.id+"'>" +
-                    "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
-                    "<a><b>"+ $('#authUserName').val() +"</b></a>"+
-                    " <a>"+ data.created_at +"</a>" +
-                    "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
-                    " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
-                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
-                    "</div> ");
+
+                if (!$("#userAvatarSrc").val()){
+                    alertify.success('Have fun ^^');
+                    $('#showPost').append("<div class='user-post"+data.id+"'>" +
+                        "<img src='storage/images/user-avatar.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                        "<a><b>"+ $('#authUserName').val() +"</b></a>"+
+                        " <a>"+ data.created_at +"</a>" +
+                        "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
+                        " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                        "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                        "</div> ");
+                }
+                else{
+                    alertify.success('Have fun ^^');
+                    $('#showPost').append("<div class='user-post"+data.id+"'>" +
+                        "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                        "<a><b>"+ $('#authUserName').val() +"</b></a>"+
+                        " <a>"+ data.created_at +"</a>" +
+                        "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
+                        " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                        "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                        "</div> ");
+                }
+
             }
         })
     });

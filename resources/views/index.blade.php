@@ -82,7 +82,11 @@
                     <div class="nav-item dropdown">
                         @if (Route::has('login'))
                             @auth
+                                @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                    <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail index-user-avatar" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                                    @else
                                 <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail index-user-avatar" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                                @endif
                             @else
                             <a href="{{ route('login') }}" class="displayAuth" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
                             <a>/</a>
@@ -623,11 +627,11 @@
             <div class="col-md-6">
                 <div class="review-slider-item">
                     <div class="review-img">
-                        <img src="{{asset('storage/images/001-fix.jpg')}}" alt="Image">
+                        <img src="{{asset('storage/'. $post->user->image)}}" alt="Image">
                     </div>
                     <div class="review-text">
                         <h2>{{$post->user->name}}</h2>
-                        <h3>Profession</h3>
+                        <h3>{{$post->user->job}}</h3>
                         <div class="ratting">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>

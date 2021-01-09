@@ -28,7 +28,11 @@
                         @if (Route::has('login'))
                             @auth
                                 <div id="load-dashboard-avatar">
+                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                        <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail user-avatar" alt="image">
+                                    @else
                                     <a><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
+                                        @endif
                                 </div>
 
                                 <a href="{{ url('/dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountName">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>

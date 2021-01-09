@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('image')->default('001-fix.jpg');
+            $table->string('image')->nullable();
+            $table->text('desc')->nullable()->default('Hi every one!');
+            $table->string('job')->default('Client');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
