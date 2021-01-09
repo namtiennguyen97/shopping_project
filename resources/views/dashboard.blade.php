@@ -485,7 +485,7 @@ show user image src
                 alertify.error("Something has wrong! Please check again...");
             }
         });
-    })
+    });
 
     {{--renderUser();--}}
     {{--function renderUser() {--}}

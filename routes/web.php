@@ -38,14 +38,21 @@ Route::post('/updateUser/{id}',[\App\Http\Controllers\UserController::class,'upd
 Route::post('/updatePassword/{id}',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('update.password');
 Route::get('/addCart/{id}',[\App\Http\Controllers\UserController::class,'addCart'])->name('user.addCart');
 Route::get('/deleteCart/{id}', [\App\Http\Controllers\UserController::class, 'deleteItemCart'])->name('product.deleteItemCart');
+// foreach data all comment
 Route::get('/post/',[\App\Http\Controllers\PostController::class,'showPost'])->name('post.index');
+// create new comment
 Route::post('/post/create',[\App\Http\Controllers\PostController::class,'addPost'])->name('post.create');
+// delete comment that user dont need
 Route::get('/post/destroy/{id}',[\App\Http\Controllers\PostController::class,'destroy'])->name('post.destroy');
+// update comment user
 Route::post('/post/update/{id}',[\App\Http\Controllers\PostController::class,'updatePost'])->name('post.update');
+//show one comment that can edit or something
 Route::get('/showOnePost/{id}',[\App\Http\Controllers\PostController::class,'showOnePost'])->name('showPost');
+//update user avatar at dashboard
 Route::post('/updateUserAvatar/{id}',[\App\Http\Controllers\UserController::class,'storeUserAvatar'])->name('user.update.avatar');
+//show user profile
+Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'showUserProfile'])->name('show.user.profile');
 
-//Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'IDChangePassword'])->name('id_user');
 
 //Admin blade
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){

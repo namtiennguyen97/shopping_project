@@ -628,13 +628,13 @@
                 <div class="review-slider-item">
                     <div class="review-img">
                         @if($post->user->image == null)
-                            <img src="{{asset('storage/images/user-avatar.jpg')}}" class="footer-user-image" style="width: 200px; height: 200px" alt="Image">
+                            <img src="{{asset('storage/images/user-avatar.jpg')}}" class="footer-user-image showUserProfile" data-id="{{$post->user->id}}" style="width: 200px; height: 200px" alt="Image">
                         @else
-                        <img src="{{asset('storage/'. $post->user->image)}}" class="footer-user-image" style="width: 200px; height: 200px" alt="Image">
+                        <img src="{{asset('storage/'. $post->user->image)}}" class="footer-user-image showUserProfile" data-id="{{$post->user->id}}" style="width: 200px; height: 200px" alt="Image">
                             @endif
                     </div>
                     <div class="review-text">
-                        <h2>{{$post->user->name}}</h2>
+                        <h2><a class="showUserProfile" data-id="{{$post->user->id}}"><b>{{$post->user->name}}</b></a></h2>
                         <h3>{{$post->user->job}}</h3>
                         <div class="ratting">
                             <i class="fa fa-star"></i>
@@ -657,6 +657,11 @@
     </div>
 </div>
 <!-- Review End -->
+
+
+
+
+
 
 <!-- Footer Start -->
 <div class="footer">
@@ -747,6 +752,19 @@
 </div>
 <!-- Footer Bottom End -->
 
+
+<!-- Modal userProfile -->
+<div class="modal fade" id="userProfileModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="appendUserProfile">
+            <h2>Loading...</h2>
+        </div>
+
+    </div>
+</div>
+
+
+
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
@@ -786,7 +804,21 @@ function addCart(id) {
                 alertify.success('Delete Your Item!');
             }
         });
+    });
+
+    $('.review-slider-item').on('click','.showUserProfile', function () {
+        $('#userProfileModal').modal('show');
+            $.ajax({
+                url: "showUserProfile/" + $(this).data('id'),
+                method: 'get',
+                success: function (data) {
+                    console.log(data);
+                    $('#appendUserProfile').empty();
+                    $('#appendUserProfile').html(data);
+                }
+            });
     })
+
 
 </script>
 </body>

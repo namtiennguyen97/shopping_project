@@ -17,9 +17,9 @@ class UserController extends Controller
     public function updateUser(Request $request, $id)
     {
         $request->validate([
-           'name' => 'min:3|max:15|required',
+            'name' => 'min:3|max:15|required',
             'full_name' => 'min:6|max:20|required',
-            'phone' =>'numeric|required',
+            'phone' => 'numeric|required',
             'address' => 'required|max:40'
         ]);
         $user = User::find($id);
@@ -36,23 +36,25 @@ class UserController extends Controller
 //       $userID =  User::findOrFail($id);
 //        return view('dashboard', compact('userID'));
 //    }
-    public function updatePassword(Request $request, $id){
+    public function updatePassword(Request $request, $id)
+    {
         $request->validate([
             'currentPassword' => 'required|password|min:8|max:25',
             'newPassword' => 'required|min:8|max:25',
             'confirmNewPassword' => 'required|same:newPassword|min:8|max:25'
         ]);
-            $user = User::find($id);
-            $user->password = Hash::make($request->input('confirmNewPassword'));
-            $user->save();
-            return $request;
+        $user = User::find($id);
+        $user->password = Hash::make($request->input('confirmNewPassword'));
+        $user->save();
+        return $request;
 
     }
 
-    public function addCart(Request $request, $id){
+    public function addCart(Request $request, $id)
+    {
         $product = Product::find($id);
-        if ($this->userCan('view-page-guest')){
-            if ($product != null){
+        if ($this->userCan('view-page-guest')) {
+            if ($product != null) {
                 $oldCart = Session('Cart') ? Session('Cart') : null;
                 $newCart = new Cart($oldCart);
                 $newCart->addCart($product, $id);
@@ -63,40 +65,57 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    public function deleteItemCart(Request $request,$id){
+    public function deleteItemCart(Request $request, $id)
+    {
         $oldCart = Session('Cart') ? Session('Cart') : null;
         $newCart = new Cart($oldCart);
         $newCart->deleteCart($id);
-        if (count($newCart->product)> 0){
+        if (count($newCart->product) > 0) {
             $request->session()->put('Cart', $newCart);
-        }
-        else{
+        } else {
             $request->session()->forget('Cart');
         }
 
         return view('shoppingCart.cart-list');
     }
 
+
+
     //upload Avatar
-    public function storeUserAvatar(Request $request, $id){
+    public function storeUserAvatar(Request $request, $id)
+    {
         $user = User::find($id);
 
-        if ($request->hasFile('userImage')){
+        if ($request->hasFile('userImage')) {
             //xoa anh cu neu co
             $currentImage = $user->image;
-            if ($currentImage){
-                Storage::delete('/public/'. $currentImage);
+            if ($currentImage) {
+                Storage::delete('/public/' . $currentImage);
             }
             $image1 = $request->file('userImage');
-            $path = $image1->store('images','public');
+            $path = $image1->store('images', 'public');
             $user->image = $path;
         }
         $user->save();
         return response()->json([
-            'requested_image'=> '<a><img src="storage/'.$user->image.'" class="img-thumbnail user-avatar" width="40" alt="image" /></a>',
-            'dashboard_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-dashboard" width="40" alt="image" />',
-            'comment_image'=> '<img src="storage/'.$user->image.'" class="img-thumbnail avatar-comment" width="40" alt="image" />'
+            'requested_image' => '<a><img src="storage/' . $user->image . '" class="img-thumbnail user-avatar" width="40" alt="image" /></a>',
+            'dashboard_image' => '<img src="storage/' . $user->image . '" class="img-thumbnail avatar-dashboard" width="40" alt="image" />',
+            'comment_image' => '<img src="storage/' . $user->image . '" class="img-thumbnail avatar-comment" width="40" alt="image" />'
         ]);
     }
+
+    //show user profile
+    public function showUserProfile($id){
+        $userKey = "product_".$id;
+        if (!Session::has($userKey)){
+            User::where('id',$id)->increment('view_count');
+            Session::put($userKey,1);
+        }
+        $user = User::find($id);
+        return view('user.profileModal', compact('user'));
+    }
+
+
+
 
 }
