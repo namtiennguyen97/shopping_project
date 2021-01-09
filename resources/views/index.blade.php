@@ -800,6 +800,9 @@ function addCart(id) {
                 $('#change-cart-items').empty();
                 $('#change-cart-items').html(data);
                 $('#total-Qty-Product').text($('#qtyCart-cart').val());
+                if(!$('#qtyCart-cart').val()){
+                    $('#total-Qty-Product').text('0');
+                }
                 console.log($('#qtyCart-cart').val());
                 alertify.success('Delete Your Item!');
             }

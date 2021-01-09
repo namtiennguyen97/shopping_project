@@ -26,8 +26,10 @@
                         <a class="btn cart">
                             <i class="fa fa-shopping-cart cart-show-list"></i>
                             @if(\Illuminate\Support\Facades\Session::has('Cart')!= null)
-                                <span class="totalQtyProduct">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
+                                <span id="total-Qty-Product">{{\Illuminate\Support\Facades\Session::get('Cart')->totalQty}}
                                     </span>
+                            @else
+                                <span id="total-Qty-Product">0</span>
                             @endif
 
                             <div class="dropdown-contentA">
@@ -97,7 +99,10 @@
             success: function (data) {
                 $('#change-cart-items').empty();
                 $('#change-cart-items').html(data);
-                $('#totalQtyProduct').text( $('#qtyCart-cart').val());
+                $('#total-Qty-Product').text($('#qtyCart-cart').val());
+                if(!$('#qtyCart-cart').val()){
+                    $('#total-Qty-Product').text('0');
+                }
                 alertify.success('Delete Your Item!');
             }
         });

@@ -57,7 +57,7 @@
                                             <td><img src="{{asset('storage/'. $row->image)}}" style="width: 80px; height: 70px" class="img-thumbnail"></td>
                                             <td><textarea readonly>{{$row->desc}}</textarea></td>
                                             <td>{{$row->productCategory->name}}</td>
-                                            <td><a class='btn btn-danger'><i data-id="{{$row->id}}" class="fas fa-trash-alt deleteProduct"></i></a></td>
+                                            <td><a href="{{route('admin.delete.product',$row->id)}}" class='btn btn-danger'><i data-id="{{$row->id}}" class="fas fa-trash-alt deleteProduct"></i></a></td>
                                             <td><a class='btn btn-info'><i data-id="{{$row->id}}" data-name="{{$row->name}}" data-price="{{$row->price}}" data-vendor="{{$row->vendor}}" data-desc="{{$row->desc}}" data-image="{{$row->image}}" class="fas fa-edit editProduct "></i></a></td>
                                         </tr>
                                         @endforeach

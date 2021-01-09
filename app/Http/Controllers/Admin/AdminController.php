@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -87,6 +88,23 @@ class AdminController extends Controller
         $product->save();
 //        return $product;
         return redirect()->route('admin.product.index');
+
+    }
+
+    // delete product
+    public function deleteProduct($id){
+        $product = Product::find($id);
+        $currentImage = $product->image;
+        if ($currentImage){
+            Storage::delete('/public/'. $currentImage);
+        }
+        $product->delete();
+        return redirect()->route('admin.product.index');
+    }
+
+    //update Product
+    public function updateProduct(Request $request, $id){
+        $product = Product::find($id);
 
     }
 }
