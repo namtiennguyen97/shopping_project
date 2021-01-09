@@ -531,7 +531,7 @@ show user image src
 
 
                 if (!$("#userAvatarSrc").val()){
-                    alertify.success('Have fun ^^');
+                    alertify.success('Posted! Make sure you update your default avatar to let everyone know who you re!');
                     $('#showPost').append("<div class='user-post"+data.id+"'>" +
                         "<img src='storage/images/user-avatar.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
                         "<a><b>"+ $('#authUserName').val() +"</b></a>"+
@@ -602,15 +602,28 @@ show user image src
             console.log(data.comment);
             alertify.success("Updated");
                 $('#modalEditPost').modal('hide');
-                // $('.user-post' + data.id).empty();
-                $('.user-post' + data.id).replaceWith("<div class='user-post"+data.id+"'>" +
-                    "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
-                    "<a><b>"+ $('#authUserName').val() +"</b></a>"+
-                    " <a>"+ data.created_at +"</a>" +
-                    "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
-                    " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
-                    "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
-                    "</div>");
+
+                if (!$("#userAvatarSrc").val()){
+                    $('.user-post' + data.id).replaceWith("<div class='user-post"+data.id+"'>" +
+                        "<img src='storage/images/user-avatar.jpg' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                        "<a><b>"+ $('#authUserName').val() +"</b></a>"+
+                        " <a>"+ data.created_at +"</a>" +
+                        "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
+                        " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                        "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                        "</div>");
+                }
+                else{
+                    $('.user-post' + data.id).replaceWith("<div class='user-post"+data.id+"'>" +
+                        "<img src='storage/"+$("#userAvatarSrc").val()+"' class='img-thumbnail avatar-comment' width='40' alt='image'>" +
+                        "<a><b>"+ $('#authUserName').val() +"</b></a>"+
+                        " <a>"+ data.created_at +"</a>" +
+                        "<button class='btn btn-info btn-edit-post' data-id="+ data.id+"><i class='fas fa-edit'></i></button>"+
+                        " <button class='btn btn-danger btn-del-post' data-id="+ data.id +"><i class='fa fa-trash-alt'></i></button>" +
+                        "<textarea class='form-control' readonly>" + data.comment + "</textarea>"+
+                        "</div>");
+                }
+
             }
         });
     });

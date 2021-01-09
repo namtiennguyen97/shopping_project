@@ -2572,3 +2572,8 @@ float: left;
     position: relative;
     float: right;
 }
+
+.footer-user-image{
+    width: 200px;
+    height: 100px;
+}

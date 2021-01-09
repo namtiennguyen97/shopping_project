@@ -627,7 +627,11 @@
             <div class="col-md-6">
                 <div class="review-slider-item">
                     <div class="review-img">
-                        <img src="{{asset('storage/'. $post->user->image)}}" alt="Image">
+                        @if($post->user->image == null)
+                            <img src="{{asset('storage/images/user-avatar.jpg')}}" class="footer-user-image" style="width: 200px; height: 200px" alt="Image">
+                        @else
+                        <img src="{{asset('storage/'. $post->user->image)}}" class="footer-user-image" style="width: 200px; height: 200px" alt="Image">
+                            @endif
                     </div>
                     <div class="review-text">
                         <h2>{{$post->user->name}}</h2>
