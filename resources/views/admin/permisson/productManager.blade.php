@@ -214,13 +214,13 @@
                     console.log(data.length);
                     for(let i =0; i < data.length; i++){
                         if(data[i].category_id === 1){
-                            $('.product-category'+ data[i].id).text('Women Clothes');
+                            $('.product-category'+ data[i].id).text('Women Cloth');
                         }
                         if(data[i].category_id === 2){
-                            $('.product-category' + data[i].id).text('Men Clothes');
+                            $('.product-category' + data[i].id).text('Men Cloth');
                         }
                         if(data[i].category_id === 3){
-                            $('.product-category' + data[i].id).text('Kid Clothes');
+                            $('.product-category' + data[i].id).text('Kid Cloth');
                         }
                     }
 
