@@ -50,15 +50,15 @@
 
                                     {{--                                   data appen here--}}
                                     @foreach(\App\Models\Product::all() as $row)
-                                        <tr>
+                                        <tr class="product-row{{$row->id}}">
                                             <td>{{$row->name}}</td>
                                             <td>{{number_format($row->price)}}</td>
                                             <td>{{$row->vendor}}</td>
                                             <td><img src="{{asset('storage/'. $row->image)}}" style="width: 80px; height: 70px" class="img-thumbnail"></td>
                                             <td><textarea readonly>{{$row->desc}}</textarea></td>
-                                            <td>{{$row->productCategory->name}}</td>
-                                            <td><a href="{{route('admin.delete.product',$row->id)}}" class='btn btn-danger'><i data-id="{{$row->id}}" class="fas fa-trash-alt deleteProduct"></i></a></td>
-                                            <td><a class='btn btn-info'><i data-id="{{$row->id}}" data-name="{{$row->name}}" data-price="{{$row->price}}" data-vendor="{{$row->vendor}}" data-desc="{{$row->desc}}" data-image="{{$row->image}}" class="fas fa-edit editProduct "></i></a></td>
+                                            <td><a class="product-category{{$row->id}}">{{$row->productCategory->name}}</a></td>
+                                            <td><a data-id="{{$row->id}}"  class='btn btn-danger product-delete-btn'><i  class="fas fa-trash-alt deleteProduct"></i></a></td>
+                                            <td><a class='btn btn-info product-edit' data-id="{{$row->id}}" data-name="{{$row->name}}" data-price="{{$row->price}}" data-vendor="{{$row->vendor}}" data-desc="{{$row->desc}}" data-image="{{$row->image}}"><i class="fas fa-edit editProduct "></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -101,7 +101,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="createProductForm" method="post" action="{{route('admin.store.product')}}" enctype="multipart/form-data" >
+                    <form id="createProductForm"  enctype="multipart/form-data" >
                         @csrf
                         <table class="table table-dark">
                             <tr>
@@ -159,5 +159,74 @@
         $('#createProductButton').click(function () {
             $('#createProductModal').modal('show');
         });
+
+         // delete product
+        $('#showProductData').on('click','.product-delete-btn', function (e) {
+            e.preventDefault();
+            let id =  $(this).data('id');
+            $.ajax({
+                url: "deleteProduct/"+ id,
+                method: 'get',
+                success: function () {
+                    $(".product-row"+ id).remove();
+                    alertify.success('Deleted!');
+                }
+            });
+        });
+
+        //create product
+        $('#createProductForm').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{route('admin.store.product')}}",
+                method: 'post',
+                data: new FormData(this),
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    console.log('created data: ', data);
+
+                    let deleteClassA = "btn btn-danger product-delete-btn";
+                    let updateClass = "btn btn-info product-edit";
+                    $('#showProductData').append("<tr class='product-row"+data.id+"'>" +
+                        "<td>"+ data.name +"</td>"+
+                        "<td>"+ data.price +"</td>"+
+                        "<td>"+ data.vendor +"</td>"+
+                        "<td><img src='storage/"+data.image+"' style=\"width: 80px; height: 70px\" class=\"img-thumbnail\"></td>" +
+                        "<td><textarea readonly>"+ data.desc +"</textarea></td>"+
+                        "<td>"+"<a class='product-category"+data.id+"'>data.category_id</a>"+"</td>"+
+                        "<td>"+"<a data-id="+ data.id +" class='"+deleteClassA+"'><i class='fas fa-trash-alt deleteProduct'></i></a>"+"</td>"+
+                        "<td>"+"<a data-id="+ data.id +" class='"+updateClass+"'><i class='fas fa-edit editProduct'></i></a>"+"</td>"+
+                        "</td>");
+                    category_render();
+                    alertify.success('Product has been created!');
+                }
+            });
+        });
+
+        function category_render() {
+            $.ajax({
+                url: "{{route('admin.category.render')}}",
+                method: 'get',
+                success: function (data) {
+                    console.log(data.length);
+                    for(let i =0; i < data.length; i++){
+                        if(data[i].category_id === 1){
+                            $('.product-category'+ data[i].id).text('Women Clothes');
+                        }
+                        if(data[i].category_id === 2){
+                            $('.product-category' + data[i].id).text('Men Clothes');
+                        }
+                        if(data[i].category_id === 3){
+                            $('.product-category' + data[i].id).text('Kid Clothes');
+                        }
+                    }
+
+                }
+            });
+        }
+
     </script>
 @endsection

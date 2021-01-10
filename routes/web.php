@@ -66,6 +66,8 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::get('/adminProduct',[\App\Http\Controllers\Admin\AdminController::class,'productIndex'])->name('admin.product.index');
     //delete product
     Route::get('deleteProduct/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteProduct'])->name('admin.delete.product');
+    //cate render
+    Route::get('/category-render',[\App\Http\Controllers\Admin\AdminController::class,'renderCategory'])->name('admin.category.render');
 });
 
 

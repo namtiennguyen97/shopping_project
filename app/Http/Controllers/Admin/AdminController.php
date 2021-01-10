@@ -39,6 +39,12 @@ class AdminController extends Controller
         ];
         echo json_encode($arrayData);
     }
+    //render category
+    public function renderCategory(){
+        $cate = Product::all();
+        return $cate;
+    }
+
 //admin show User manager template
     public function userManager(){
         if ($this->userCan('view-page-admin')){
@@ -87,7 +93,7 @@ class AdminController extends Controller
         $product->category_id = $request->input('category_id');
         $product->save();
 //        return $product;
-        return redirect()->route('admin.product.index');
+        return response()->json($product);
 
     }
 
@@ -105,6 +111,7 @@ class AdminController extends Controller
     //update Product
     public function updateProduct(Request $request, $id){
         $product = Product::find($id);
+
 
     }
 }
