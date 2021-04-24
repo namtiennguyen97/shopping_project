@@ -39,7 +39,7 @@ class Controller extends BaseController
     public function showPageAdmin(){
         if (!$this->userCan('view-page-admin')){
 //            abort('403',__('You re not enough authorize to access this website'));
-            return redirect()->route('login');
+            return view('auth.login');
         }
         return view('admin.index');
     }

@@ -71,3 +71,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
 });
 
 
+Route::get('/',[\App\Http\Controllers\ProductController::class,'productIndex']);
+Route::post('/createProduct',[\App\Http\Controllers\ProductController::class,'createProductAdmin']);
+

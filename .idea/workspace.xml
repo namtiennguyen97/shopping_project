@@ -2,8 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10e8639e-eac0-4e23-9494-d3a753ef08e9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomAuth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/EloquentImplement/EloquentImplement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/ProductRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/ProductRepositoryImplement/ProductRepositoryImplement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/Repository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/UserRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Repository/UserRepositoryImplement/UserRepositoryImplement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Service/ProductService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Service/Service.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Service/UserService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Service/productServiceImplement/ProductServiceImplement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Service/userServiceImplement/UserServiceImplement.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permisson/productManager.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permisson/productManager.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +172,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/storage/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -206,7 +225,14 @@
       <workItem from="1610121656146" duration="1943000" />
       <workItem from="1610177671699" duration="15675000" />
       <workItem from="1610207920067" duration="686000" />
-      <workItem from="1610259277290" duration="8896000" />
+      <workItem from="1610259277290" duration="9876000" />
+      <workItem from="1610339761891" duration="585000" />
+      <workItem from="1610439651744" duration="4238000" />
+      <workItem from="1610454574346" duration="183000" />
+      <workItem from="1610545893070" duration="105000" />
+      <workItem from="1617178529832" duration="808000" />
+      <workItem from="1617615337804" duration="76000" />
+      <workItem from="1619274578645" duration="5281000" />
     </task>
     <servers />
   </component>
@@ -217,29 +243,13 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608974657717">
+    <state x="488" y="146" key="NewPhpClassDialog" timestamp="1619278226750">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1608974657717" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1610119966332">
+    <state x="488" y="146" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1619278226750" />
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1617615336697">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1610119966332" />
-    <state x="465" y="178" key="NewPhpClassDialog" timestamp="1608976189040">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="465" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1608976189040" />
-    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1610201375726">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1610201375726" />
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1610290167140">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1610290167140" />
-    <state x="346" y="49" width="670" height="58" key="search.everywhere.popup" timestamp="1610200601639">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="670" height="58" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1610200601639" />
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1617615336697" />
   </component>
 </project>

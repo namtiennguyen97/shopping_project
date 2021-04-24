@@ -86,7 +86,7 @@ class AdminController extends Controller
         $product->price = $request->input('price');
         if ($request->hasFile('image')){
             $image1 = $request->file('image');
-            $path = $image1->store('images','public');
+            $path = $image1->store('images/','public');
             $product->image = $path;
         }
         $product->desc = $request->input('desc');

@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->text('desc')->nullable()->default('Hi every one!');
-            $table->string('job')->default('Client');
+
             $table->integer('view_count')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

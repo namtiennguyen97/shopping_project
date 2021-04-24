@@ -413,7 +413,7 @@
         </div>
         <div class="row align-items-center product-slider product-slider-4">
 {{--            Foreach product data here--}}
-            @foreach(\App\Models\Product::all() as $row)
+            @foreach($product as $row)
             <div class="col-lg-3">
                 <div class="product-item">
                     <div class="product-title">

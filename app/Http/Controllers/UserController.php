@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePassword;
+use App\Http\Service\userServiceImplement\UserServiceImplement;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    protected $userService;
+    public function __construct(UserServiceImplement $userServiceImplement)
+    {
+        $this->userService = $userServiceImplement;
+    }
+
     public function updateUser(Request $request, $id)
     {
         $request->validate([
@@ -90,7 +97,7 @@ class UserController extends Controller
             //xoa anh cu neu co
             $currentImage = $user->image;
             if ($currentImage) {
-                Storage::delete('/public/' . $currentImage);
+                Storage::delete('/public/'. $currentImage);
             }
             $image1 = $request->file('userImage');
             $path = $image1->store('images', 'public');
@@ -104,16 +111,17 @@ class UserController extends Controller
         ]);
     }
 
-    //show user profile
-    public function showUserProfile($id){
-        $userKey = "product_".$id;
-        if (!Session::has($userKey)){
-            User::where('id',$id)->increment('view_count');
-            Session::put($userKey,1);
+    public function userDashboard(){
+        if (\session()->has('logged')){
+            $user = User::where('id','=',\session('logged'))->first();
+            return view();
         }
-        $user = User::find($id);
-        return view('user.profileModal', compact('user'));
+
     }
+
+
+
+
 
 
 
