@@ -40,7 +40,7 @@
                     <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel"
                          aria-labelledby="dashboard-nav">
                         <h4>{{$user->name}} Dashboard</h4>
-                        <p>
+
                             <div class="row">
                             <div class="col-md-4 dashboard">
                                 <div id="user-avatar-dashboard">
