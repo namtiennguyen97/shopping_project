@@ -38,8 +38,8 @@
                         <input class="form-control" readonly value="{{$user->userRole->name}}">
                     </div>
                     <div class="col-md-6">
-                        <b>Profession: <i class="fas fa-user-tie"></i></b>
-                        <input class="form-control" readonly value="{{$user->job}}">
+                        <b>View Profile count: <i class="fas fa-eye"></i></b>
+                        <input class="form-control" readonly value="{{$user->view_count}}">
                     </div>
                     <div class="col-lg-12">
                         <b>Address: <i class="fas fa-home"></i></b>

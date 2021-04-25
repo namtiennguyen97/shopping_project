@@ -10,6 +10,7 @@
     </div>
 </div>
 {{--My account--}}
+
 <div class="my-account">
     <div class="container-fluid">
         <div class="row">
@@ -293,7 +294,7 @@
                                         <span id="showErrorAddress" class="text-danger"></span>
                                     </div>
                                     <input hidden id="showId"
-                                           data-id="{{$user->id}}">
+                                           data-id="{{\App\Http\UserFacade::getUser()->id}}">
                                     <div class="col-md-12">
                                         <button class="btn" type="submit">Update Account</button>
                                         <br><br>
@@ -303,7 +304,7 @@
                         </div>
                         <h4>Password change</h4>
 
-                        <form id="changePassword">
+                        <form id="changePassword" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
@@ -436,16 +437,17 @@ show user image src
         });
     });
 
+    //change password
     $('#changePassword').on('submit', function (e) {
         e.preventDefault();
         let id = $('#showId').data('id');
         $.ajax({
-            url: "updatePassword/" + id,
+            url: "updatePassword/"+id,
             method: 'post',
             data: $('#changePassword').serialize(),
             success: function (response) {
                 alertify.success("Password changed successfully!");
-                alertify.alert("ALERT", "You have to re-Login");
+                // alertify.alert("ALERT", "You have to re-Login");
 
                 window.location.reload();
             },

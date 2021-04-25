@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\UserFacade;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -38,11 +39,12 @@ class Controller extends BaseController
         return view('dashboard');
     }
     public function showPageAdmin(){
-        if (!$this->userCan('view-page-admin')){
+        if (UserFacade::getUser()->role_id == 2){
 //            abort('403',__('You re not enough authorize to access this website'));
-            return view('auth.login');
+            return view('admin.index');
+
         }
-        return view('admin.index');
+        return redirect()->route('index');
     }
 
     public function mainIndex(){

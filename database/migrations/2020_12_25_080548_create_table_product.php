@@ -19,10 +19,13 @@ class CreateTableProduct extends Migration
             $table->integer('price');
             $table->string('vendor');
             $table->string('image');
+            $table->string('previewImage1')->nullable();
+            $table->string('previewImage2')->nullable();
+            $table->integer('view_count')->nullable();
             $table->text('desc')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('view')->nullable();
+
             $table->timestamps();
         });
     }

@@ -101,7 +101,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="createProductForm"  enctype="multipart/form-data" >
+                    <form id="createProductForm" method="post" enctype="multipart/form-data" >
                         @csrf
                         <table class="table table-dark">
                             <tr>
@@ -202,6 +202,9 @@
                         "</td>");
                     category_render();
                     alertify.success('Product has been created!');
+                },
+                error: function (response) {
+                    console.log(response);
                 }
             });
         });

@@ -39,7 +39,7 @@ abstract class EloquentImplement implements Repository
 
     public function findOrFail($id)
     {
-        // TODO: Implement findOrFail() method.
+        return $result = $this->model->find($id);
     }
 
     public function delete($id)

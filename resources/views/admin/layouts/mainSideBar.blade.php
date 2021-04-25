@@ -13,14 +13,14 @@
                 <img src="{{asset('AdminLTE/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block" id="adminName">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                <a href="#" class="d-block" id="adminName">{{\App\Http\UserFacade::getUser()->name}}</a>
             </div>
         </div>
         <div class="info">
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('custom.logout') }}">
                 @csrf
 
-                <a class="d-block" href="{{ route('logout') }}"
+                <a class="d-block" href="{{ route('custom.logout') }}"
                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                     <i class="fa fa-sign-out-alt"></i> Logout </a>

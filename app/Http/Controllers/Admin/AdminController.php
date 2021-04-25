@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\productServiceImplement\ProductServiceImplement;
+use App\Http\UserFacade;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,6 +14,11 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    protected $productService;
+    public function __construct(ProductServiceImplement $productServiceImplement)
+    {
+        $this->productService = $productServiceImplement;
+    }
 
 // render user in admin
     public function renderUser(){
@@ -47,7 +54,7 @@ class AdminController extends Controller
 
 //admin show User manager template
     public function userManager(){
-        if ($this->userCan('view-page-admin')){
+        if (UserFacade::getUser()->role_id == 2){
             return view('admin.permisson.userManager');
         }
         return redirect()->route('index');
@@ -62,7 +69,7 @@ class AdminController extends Controller
 
     // edit User
     public function editUser(Request $request, $id){
-        if ($this->userCan('view-page-admin')){
+
            $user = User::find($id);
             $user->name = $request->input('name');
             $user->full_name = $request->input('full_name');
@@ -71,29 +78,30 @@ class AdminController extends Controller
             $user->role_id = $request->input('role_id');
             $user->save();
             return $user;
-        }
+
     }
 
     //Product controller
     public function productIndex(){
         return view('admin.permisson.productManager');
     }
-
+//create product in admin page
     public function storeProduction(Request $request){
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->vendor = $request->input('vendor');
-        $product->price = $request->input('price');
+
         if ($request->hasFile('image')){
             $image1 = $request->file('image');
-            $path = $image1->store('images/','public');
-            $product->image = $path;
+            $path = $image1->store('images','public');
+            $newProduct = $this->productService->create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'vendor' => $request->vendor,
+                'desc' => $request->desc,
+                'category_id' => $request->category_id,
+                'image' => $path
+            ]);
+            return response()->json($newProduct);
         }
-        $product->desc = $request->input('desc');
-        $product->category_id = $request->input('category_id');
-        $product->save();
-//        return $product;
-        return response()->json($product);
+
 
     }
 

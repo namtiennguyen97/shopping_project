@@ -838,9 +838,12 @@
             dataType: 'json',
             data: $('#loginForm').serialize(),
             success: function (data) {
+                alertify.success('You has been logged in.');
+                // window.location.reload();
                 console.log(data);
             },
             error: function (response) {
+                alertify.error('Wrong email or password!');
                 console.log(response);
             }
         });
@@ -855,10 +858,12 @@
             data: $('#registerForm').serialize(),
             dataType: 'json',
             success: function () {
+                alertify.success('Your account has been created! Now login.');
                 $('#modalRegister').modal('hide');
                 $('#modalLogin').modal('show');
             },
             error: function (response) {
+                alertify.error('Something went wrong, please check again!');
                 console.log(response);
             }
         });

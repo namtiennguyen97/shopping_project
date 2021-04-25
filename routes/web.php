@@ -24,16 +24,18 @@ Route::get('/guest', function (){
 return view('guest');
 })->name('guest.index');
 
-Route::get('/admin',function (){
-    return view('admin');
-})->name('admin.index');
+//Route::get('/admin',function (){
+//    return view('admin');
+//})->name('admin.index');
 
 
 
 
 
 Route::post('/updateUser/{id}',[\App\Http\Controllers\UserController::class,'updateUser'])->name('update.user');
+
 Route::post('/updatePassword/{id}',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('update.password');
+
 Route::get('/addCart/{id}',[\App\Http\Controllers\UserController::class,'addCart'])->name('user.addCart')->middleware('checkCustomAuth');
 Route::get('/deleteCart/{id}', [\App\Http\Controllers\UserController::class, 'deleteItemCart'])->name('product.deleteItemCart')->middleware('checkCustomAuth');
 // foreach data all comment
@@ -53,9 +55,9 @@ Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'
 
 
 //Admin blade
-Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
+Route::group(['namespace'=>'Admin'],function (){
     Route::get('/page-guest',[\App\Http\Controllers\Controller::class,'showPageGuest']);
-    Route::get('/',[\App\Http\Controllers\Controller::class,'showPageAdmin'])->name('admin.index');
+    Route::get('/admin',[\App\Http\Controllers\Controller::class,'showPageAdmin'])->name('admin.index')->middleware('loginCheck');
     Route::get('/userManager',[\App\Http\Controllers\Admin\AdminController::class,'userManager'])->name('admin.user');
     Route::get('/userRender',[\App\Http\Controllers\Admin\AdminController::class,'renderUser'])->name('render.user');
     Route::get('/deleteUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteUser'])->name('admin.delete.user');
