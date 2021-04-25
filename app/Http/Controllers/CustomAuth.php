@@ -13,7 +13,7 @@ class CustomAuth extends Controller
             'name' => 'required|max:15|min:3',
             'full_name' => 'required|max:30|min:3',
             'phone' => 'required|numeric',
-            'email' => 'required|unique|email|max:40|min:9',
+            'email' => 'required|unique:users|email|max:40|min:9',
             'address' => 'required|max:50|min:2',
             'role_id' => 'required',
             'password' => 'required|max:25|min:8',

@@ -5,6 +5,7 @@
       <change afterPath="$PROJECT_DIR$/app/Http/Middleware/CheckCustomAuth.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomAuth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomAuth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
@@ -226,7 +227,7 @@
       <workItem from="1617615337804" duration="76000" />
       <workItem from="1619274578645" duration="12404000" />
       <workItem from="1619319763395" duration="7894000" />
-      <workItem from="1619337267388" duration="7001000" />
+      <workItem from="1619337267388" duration="7415000" />
     </task>
     <servers />
   </component>
