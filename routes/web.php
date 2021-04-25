@@ -34,8 +34,8 @@ Route::get('/admin',function (){
 
 Route::post('/updateUser/{id}',[\App\Http\Controllers\UserController::class,'updateUser'])->name('update.user');
 Route::post('/updatePassword/{id}',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('update.password');
-Route::get('/addCart/{id}',[\App\Http\Controllers\UserController::class,'addCart'])->name('user.addCart');
-Route::get('/deleteCart/{id}', [\App\Http\Controllers\UserController::class, 'deleteItemCart'])->name('product.deleteItemCart');
+Route::get('/addCart/{id}',[\App\Http\Controllers\UserController::class,'addCart'])->name('user.addCart')->middleware('checkCustomAuth');
+Route::get('/deleteCart/{id}', [\App\Http\Controllers\UserController::class, 'deleteItemCart'])->name('product.deleteItemCart')->middleware('checkCustomAuth');
 // foreach data all comment
 Route::get('/post/',[\App\Http\Controllers\PostController::class,'showPost'])->name('post.index');
 // create new comment
@@ -48,8 +48,8 @@ Route::post('/post/update/{id}',[\App\Http\Controllers\PostController::class,'up
 Route::get('/showOnePost/{id}',[\App\Http\Controllers\PostController::class,'showOnePost'])->name('showPost');
 //update user avatar at dashboard
 Route::post('/updateUserAvatar/{id}',[\App\Http\Controllers\UserController::class,'storeUserAvatar'])->name('user.update.avatar');
-//show user profile
-//Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'showUserProfile'])->name('show.user.profile');
+//show user modal profile in footer
+Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'showUserProfile'])->name('show.user.profile');
 
 
 //Admin blade
@@ -77,8 +77,6 @@ Route::post('/userRegister',[\App\Http\Controllers\CustomAuth::class,'register']
 Route::post('/userLogin',[\App\Http\Controllers\CustomAuth::class,'userLogin'])->name('custom.login');
 Route::post('/userLogout',[\App\Http\Controllers\CustomAuth::class,'logout'])->name('custom.logout');
 
-Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashboard'])->name('custom.user.dashboard');
+Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashboard'])->name('custom.user.dashboard')->middleware('loginCheck');
 
-Route::get('/facade', function (){
-return view('facade');
-});
+

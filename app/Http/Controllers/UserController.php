@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     protected $userService;
+
     public function __construct(UserServiceImplement $userServiceImplement)
     {
         $this->userService = $userServiceImplement;
     }
 
+    //update user information (van hoat dong dc)
     public function updateUser(Request $request, $id)
     {
         $request->validate([
@@ -39,10 +41,12 @@ class UserController extends Controller
     }
 
 
-    public function IDChangePassword($id){
-       $userID =  User::findOrFail($id);
+    public function IDChangePassword($id)
+    {
+        $userID = User::findOrFail($id);
         return view('dashboard', compact('userID'));
     }
+
     public function updatePassword(Request $request, $id)
     {
         $request->validate([
@@ -54,24 +58,32 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('confirmNewPassword'));
         $user->save();
         return $request;
-
     }
 
+
+    //add item into cart (van dung dc)
     public function addCart(Request $request, $id)
     {
-        $product = Product::find($id);
-      
-            if ($product != null) {
-                $oldCart = Session('Cart') ? Session('Cart') : null;
-                $newCart = new Cart($oldCart);
-                $newCart->addCart($product, $id);
-                $request->session()->put('Cart', $newCart);
-            }
-            return view('shoppingCart.cart-list');
+       if (\session()->has('logged')){
+           $product = Product::find($id);
+           if ($product != null) {
+               $oldCart = Session('Cart') ? Session('Cart') : null;
+               $newCart = new Cart($oldCart);
+               $newCart->addCart($product, $id);
+               $request->session()->put('Cart', $newCart);
+           }
+           return view('shoppingCart.cart-list');
+       } else{
+           \session()->pull('Cart');
+       }
+       // neu logout hoac ko dang nhap thi xoa sessin Cart
+
+
+
     }
 
 
-
+    //delete item cART (van dung dc)
     public function deleteItemCart(Request $request, $id)
     {
         $oldCart = Session('Cart') ? Session('Cart') : null;
@@ -87,8 +99,7 @@ class UserController extends Controller
     }
 
 
-
-    //upload Avatar
+    //upload Avatar (van dung duoc)
     public function storeUserAvatar(Request $request, $id)
     {
         $user = User::find($id);
@@ -97,7 +108,7 @@ class UserController extends Controller
             //xoa anh cu neu co
             $currentImage = $user->image;
             if ($currentImage) {
-                Storage::delete('/public/'. $currentImage);
+                Storage::delete('/public/' . $currentImage);
             }
             $image1 = $request->file('userImage');
             $path = $image1->store('images', 'public');
@@ -111,13 +122,11 @@ class UserController extends Controller
         ]);
     }
 
-
-
-
-
-
-
-
+    public function showUserProfile($id)
+    {
+        $user = User::find($id);
+        return view('user.profileModal', compact('user'));
+    }
 
 
 }

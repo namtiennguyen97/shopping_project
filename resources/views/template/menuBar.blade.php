@@ -26,25 +26,25 @@
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
                         @if (session()->has('logged'))
-                            {{\App\Http\UserFacade::getUser()}}
+
                                 <div id="load-dashboard-avatar">
-                                    @if($user->image == null)
+                                    @if(\App\Http\UserFacade::getUser()->image == null)
                                         <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail user-avatar" alt="image">
                                     @else
-                                    <a><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
+                                    <a><img src="{{asset('storage/'.\App\Http\UserFacade::getUser()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
                                         @endif
                                 </div>
 
-                                <a href="{{ url('/dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountName">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                                <a href="{{ route('custom.user.dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountName">{{\App\Http\UserFacade::getUser()->name}}</a>
 
                                 <div class="dropdown-menu">
 
-                                    <a href="{{ route('profile.show') }}" class="dropdown-item">Profile <i class="fas fa-user"></i></a>
+                                    <a href="{{ route('custom.user.dashboard') }}" class="dropdown-item">Profile <i class="fas fa-user"></i></a>
 
-                                        <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
+                                        <form method="POST" action="{{ route('custom.logout') }}" class="dropdown-item">
                                             @csrf
 
-                                            <a style="color: black" href="{{ route('logout') }}"
+                                            <a style="color: black" href="{{ route('custom.logout') }}"
                                                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                             Logout <i class="fas fa-sign-out-alt"></i></a>
@@ -54,10 +54,10 @@
                             @else
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                                 <div class="dropdown-menu">
-                                    <a href="{{ route('login') }}" class="dropdown-item">Login</a>
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="dropdown-item">Register</a>
-                                    @endif
+                                    <a href="javascript:" id="customLogin" class="dropdown-item">Login</a>
+
+                                        <a href="javascript:" id="customeRegister" class="dropdown-item">Register</a>
+
 
                                 </div>
                             @endif

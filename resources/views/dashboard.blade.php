@@ -314,7 +314,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     New Password:
-                                    <input class="form-control" id="newPassword" name="newPassword" type="text" required
+                                    <input class="form-control" id="newPassword" name="newPassword" type="password" required
                                            placeholder="New Password">
                                     {{--                                show validate--}}
                                     <span id="showErrorsNewPassword" class="text-danger"></span>
@@ -322,7 +322,7 @@
                                 <div class="col-md-6">
                                     Confirm New Password:
                                     <input class="form-control" id="confirmNewPassword" name="confirmNewPassword"
-                                           required type="text" placeholder="Confirm Password">
+                                           required type="password" placeholder="Confirm Password">
                                     {{--                               show validate--}}
                                     <span id="showErrorsCFPassword" class="text-danger"></span>
 

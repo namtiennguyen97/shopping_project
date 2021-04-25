@@ -32,58 +32,7 @@
 <!-- Top bar End -->
 
 <!-- Nav Bar Start -->
-<div class="nav">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a href="#" class="navbar-brand">MENU</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav mr-auto">
-                    <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
-                    <a href="product-list.html" class="nav-item nav-link">Sản phẩm</a>
-                    <a href="product-detail.html" class="nav-item nav-link">Chi tiết mặt hàng</a>
-                    <a href="cart.html" class="nav-item nav-link">Giỏ hàng</a>
-                    <a href="checkout.html" class="nav-item nav-link">Thanh toán</a>
-                    <a href="{{ url('/dashboard') }}" class="nav-item nav-link">Tài khoản</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Xem thêm</a>
-                        <div class="dropdown-menu">
-                            <a href="wishlist.html" class="dropdown-item">Danh sách yêu thích</a>
-                            <a href="login.html" class="dropdown-item">Đăng nhập/ đăng kí</a>
-                            <a href="{{route('admin.index')}}" class="dropdown-item">Quản lý</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="navbar-nav ml-auto">
-                    <div class="nav-item dropdown">
-                        @if (session()->has('logged'))
-
-                                @if($user->image == null)
-                                    <a href="{{ route('custom.user.dashboard') }}" class="nav-link"><img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail index-user-avatar" alt="image"> {{$user->name}}  <i class="fas fa-user"></i></a>
-                                    <form method="post" action="{{route('custom.logout')}}">
-                                        @csrf
-                                        <button class="btn btn-primary">Logout</button>
-                                    </form>
-
-                                    @else
-                                <a href="{{ route('custom.user.dashboard') }}" class="nav-link"><img src="{{asset('storage/'.$user->image)}}" class="img-thumbnail index-user-avatar" alt="image"> {{$user->name}}  <i class="fas fa-user"></i></a>
-                                @endif
-                            @else
-                            <a href="javascript:" class="displayAuth" id="customLogin" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
-                            <a>/</a>
-                            <a href="javascript:" class="displayAuth" id="customeRegister">Đăng kí</a>
-
-                    </div>
-                        @endif
-                    </div>
-                </div>
-        </nav>
-
-    </div>
-</div>
+@include('template.menuBar')
 <!-- Nav Bar End -->
 
 <!-- Bottom Bar Start -->
@@ -929,6 +878,10 @@ function addCart(id) {
             $('#total-Qty-Product').text($('#qtyCart-cart').val());
             console.log($('#qtyCart-cart').val());
             alertify.success('Added to Your Cart!');
+        },
+        error: function (response) {
+            console.log(response);
+            alertify.error('You have to login!');
         }
     })
 }
@@ -946,6 +899,10 @@ function addCart(id) {
                 }
                 console.log($('#qtyCart-cart').val());
                 alertify.success('Delete Your Item!');
+            },
+            error: function (response) {
+                console.log(response);
+                alertify.error('You have to login!');
             }
         });
     });
@@ -953,7 +910,7 @@ function addCart(id) {
     $('.review-slider-item').on('click','.showUserProfile', function () {
         $('#userProfileModal').modal('show');
             $.ajax({
-                url: "showUserProfile/" + $(this).data('id'),
+                url: "showUserProfile/"+$(this).data('id'),
                 method: 'get',
                 success: function (data) {
                     console.log(data);
