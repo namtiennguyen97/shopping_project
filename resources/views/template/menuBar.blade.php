@@ -13,7 +13,7 @@
                     <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
                     <a href="cart.html" class="nav-item nav-link">Cart</a>
                     <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                    <a href="{{ url('/dashboard') }}" class="nav-item nav-link">My Account</a>
+                    <a href="{{ route('custom.user.dashboard') }}" class="nav-item nav-link">My Account</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
                         <div class="dropdown-menu">
@@ -25,10 +25,10 @@
                 </div>
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
-                        @if (Route::has('login'))
-                            @auth
+                        @if (session()->has('logged'))
+                            {{\App\Http\UserFacade::getUser()}}
                                 <div id="load-dashboard-avatar">
-                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                    @if($user->image == null)
                                         <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail user-avatar" alt="image">
                                     @else
                                     <a><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
@@ -58,7 +58,7 @@
                                     @if (Route::has('register'))
                                         <a href="{{ route('register') }}" class="dropdown-item">Register</a>
                                     @endif
-                                    @endauth
+
                                 </div>
                             @endif
                     </div>

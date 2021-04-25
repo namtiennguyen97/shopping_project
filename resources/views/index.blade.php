@@ -7,28 +7,7 @@
     <meta content="eCommerce HTML Template Free Download" name="keywords">
     <meta content="eCommerce HTML Template Free Download" name="description">
 
-    <!-- Favicon -->
-    <link href="{{asset('mainTemplate/img/favicon.ico')}}" rel="icon">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-    <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-    <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
-
-    <!-- CSS Libraries -->
-
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="{{asset('mainTemplate/lib/slick/slick.css')}}" rel="stylesheet">
-    <link href="{{asset('mainTemplate/lib/slick/slick-theme.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('mainTemplate/css/style.css')}}" rel="stylesheet">
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+   @include('cdn')
 
 </head>
 
@@ -80,20 +59,23 @@
                 </div>
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
-                        @if (Route::has('login'))
-                            @auth
-                                @if(\Illuminate\Support\Facades\Auth::user()->image == null)
-                                    <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail index-user-avatar" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                        @if (session()->has('logged'))
+
+                                @if($user->image == null)
+                                    <a href="{{ route('custom.user.dashboard') }}" class="nav-link"><img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail index-user-avatar" alt="image"> {{$user->name}}  <i class="fas fa-user"></i></a>
+                                    <form method="post" action="{{route('custom.logout')}}">
+                                        @csrf
+                                        <button class="btn btn-primary">Logout</button>
+                                    </form>
+
                                     @else
-                                <a href="{{ url('/dashboard') }}" class="nav-link"><img src="{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}" class="img-thumbnail index-user-avatar" alt="image"> {{\Illuminate\Support\Facades\Auth::user()->name}}  <i class="fas fa-user"></i></a>
+                                <a href="{{ route('custom.user.dashboard') }}" class="nav-link"><img src="{{asset('storage/'.$user->image)}}" class="img-thumbnail index-user-avatar" alt="image"> {{$user->name}}  <i class="fas fa-user"></i></a>
                                 @endif
                             @else
-                            <a href="{{ route('login') }}" class="displayAuth" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
+                            <a href="javascript:" class="displayAuth" id="customLogin" >Đăng nhập<i class="fas fa-sign-in-alt"></i></a>
                             <a>/</a>
-                                    @if (Route::has('register'))
-                            <a href="{{ route('login') }}" class="displayAuth">Đăng kí</a>
-                                    @endif
-                                    @endauth
+                            <a href="javascript:" class="displayAuth" id="customeRegister">Đăng kí</a>
+
                     </div>
                         @endif
                     </div>
@@ -413,7 +395,7 @@
         </div>
         <div class="row align-items-center product-slider product-slider-4">
 {{--            Foreach product data here--}}
-            @foreach($product as $row)
+            @foreach(\App\Models\Product::all() as $row)
             <div class="col-lg-3">
                 <div class="product-item">
                     <div class="product-title">
@@ -663,6 +645,7 @@
 
 
 
+
 <!-- Footer Start -->
 <div class="footer">
     <div class="container-fluid">
@@ -765,6 +748,110 @@
 
 
 
+<!-- Modal Login-->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" >
+{{--            <img src="{{asset('2b.jpeg')}}" style="max-width: 100%; max-height: 100%; position: absolute">--}}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="loginForm" action="{{route('custom.login')}}">
+                @csrf
+                <div class="modal-body">
+                   <table class="table table-striped ">
+                       <tr>
+                           <td>Email:</td>
+                           <td><input type="email" class="form-control" name="email" placeholder="Enter Your email..."></td>
+                       </tr>
+                       <tr>
+                           <td>Password:</td>
+                           <td><input type="password" class="form-control" name="password" placeholder="Enter your password..."></td>
+                       </tr>
+                       <tr>
+                           <td>If you dont have any account, pls register!</td>
+                           <td><button type="button" class="btn btn-info form-control" id="registerOnLoginModal">Register</button></td>
+                       </tr>
+                   </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{{--end of modal login--}}
+
+<!-- Modal Register-->
+<div class="modal fade" id="modalRegister" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register new Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="registerForm" action="{{route('custom.register')}}">
+                @csrf
+                <div class="modal-body">
+                    <table class="table table-striped ">
+                        <tr>
+                            <td>Name:</td>
+                            <td><input type="text" class="form-control" name="name" placeholder="Enter Your name..."></td>
+                        </tr>
+                        <tr>
+                            <td>FullName:</td>
+                            <td><input type="text" class="form-control" name="full_name" placeholder="Enter Your full name..."></td>
+                        </tr>
+
+                        <tr>
+                            <td>Phone</td>
+                            <td><input type="number" class="form-control" name="phone" placeholder="Enter Your phone..."></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td><input type="email" class="form-control" name="email" placeholder="Enter Your email..."></td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td><input type="text" class="form-control" name="address" placeholder="Enter Your address..."></td>
+                        </tr>
+                        <tr>
+                            <td>Role:</td>
+                            <td><select name="role_id">
+                                    @foreach(\App\Models\Roles::all() as $value)
+                                        <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endforeach
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type="password" class="form-control" name="password" placeholder="Enter your password..."></td>
+                        </tr>
+                        <tr>
+                            <td>Re-enter your password:</td>
+                            <td><input type="password" class="form-control" name="rePassword" placeholder="Re-enter your password"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
@@ -776,8 +863,62 @@
 <!-- Template Javascript -->
 <script src="{{asset('mainTemplate/js/main.js')}}"></script>
 
+<script>
+
+    //login custom
+    $('#customLogin').click(function () {
+        $('#modalLogin').modal('show');
+    });
+
+    $('#registerOnLoginModal').click(function () {
+        $('#modalLogin').modal('hide');
+        $('#modalRegister').modal('show');
+    });
+
+    $('#customeRegister').click(function () {
+
+        $('#modalRegister').modal('show');
+    });
+
+
+    $('#loginForm').on('submit', function () {
+
+        $.ajax({
+            url: "{{route('custom.login')}}",
+            method: 'post',
+            dataType: 'json',
+            data: $('#loginForm').serialize(),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    });
+    //end login custom
+
+    $('#registerForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{{route('custom.register')}}",
+            method: 'post',
+            data: $('#registerForm').serialize(),
+            dataType: 'json',
+            success: function () {
+                $('#modalRegister').modal('hide');
+                $('#modalLogin').modal('show');
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    })
+</script>
+
 
 <script>
+
 function addCart(id) {
     $.ajax({
         url: "addCart/" + id,

@@ -39,10 +39,10 @@ class UserController extends Controller
     }
 
 
-//    public function IDChangePassword($id){
-//       $userID =  User::findOrFail($id);
-//        return view('dashboard', compact('userID'));
-//    }
+    public function IDChangePassword($id){
+       $userID =  User::findOrFail($id);
+        return view('dashboard', compact('userID'));
+    }
     public function updatePassword(Request $request, $id)
     {
         $request->validate([
@@ -60,7 +60,7 @@ class UserController extends Controller
     public function addCart(Request $request, $id)
     {
         $product = Product::find($id);
-        if ($this->userCan('view-page-guest')) {
+      
             if ($product != null) {
                 $oldCart = Session('Cart') ? Session('Cart') : null;
                 $newCart = new Cart($oldCart);
@@ -68,9 +68,9 @@ class UserController extends Controller
                 $request->session()->put('Cart', $newCart);
             }
             return view('shoppingCart.cart-list');
-        }
-        return redirect()->route('login');
     }
+
+
 
     public function deleteItemCart(Request $request, $id)
     {
@@ -111,13 +111,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function userDashboard(){
-        if (\session()->has('logged')){
-            $user = User::where('id','=',\session('logged'))->first();
-            return view();
-        }
 
-    }
 
 
 

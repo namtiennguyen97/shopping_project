@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -43,4 +44,10 @@ class Controller extends BaseController
         }
         return view('admin.index');
     }
+
+    public function mainIndex(){
+        $user = User::where('id','=',session('logged'))->first();
+        return view('index', compact('user'));
+    }
+
 }

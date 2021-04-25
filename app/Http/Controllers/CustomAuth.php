@@ -12,7 +12,7 @@ class CustomAuth extends Controller
         $request->validate([
             'name' => 'required|max:15|min:3',
             'full_name' => 'required|max:30|min:3',
-            'phone' => 'required|numeric|max:14|min:8',
+            'phone' => 'required|numeric',
             'email' => 'required|email|max:40|min:9',
             'address' => 'required|max:50|min:2',
             'role_id' => 'required',
@@ -39,17 +39,34 @@ class CustomAuth extends Controller
         ]);
         $user = User::where('email','=',$request->email)->first();
         if ($user){
-            if (Hash::check($user->password,$request->password)){
+            if (Hash::check($request->password,$user->password)){
                 session()->put('logged',$user->id);
-                return response()->json(['message','You has been logged!'],200);
+                return redirect()->route('index');
             } else{
                 return response()->json(['errorLogin','Something went wrong! Pls check again'],400);
             }
         } else{
             return response()->json(['ErrorLogin','No user match'],400);
         }
-
     }
+
+    public function logout(){
+        if (session()->has('logged')){
+            session()->pull('logged');
+            return redirect()->route('index');
+        }
+    }
+
+    public function userDashboard(){
+        if (\session()->has('logged')){
+           $user = User::find(session('logged'));
+
+        }
+        return view('dashboard', compact('user'));
+    }
+
+    //navbar auth
+
 }
 
 

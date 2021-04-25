@@ -25,10 +25,10 @@
                             class="fa fa-map-marker-alt"></i>address</a>
                     <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i
                             class="fa fa-user"></i>Account Details</a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('custom.logout') }}">
                         @csrf
 
-                        <a class="nav-link" href="{{ route('logout') }}"
+                        <a class="nav-link" href="{{ route('custom.logout') }}"
                            onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                             <i class="fa fa-sign-out-alt"></i> Logout </a>
@@ -39,15 +39,15 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel"
                          aria-labelledby="dashboard-nav">
-                        <h4>{{\Illuminate\Support\Facades\Auth::user()->name}} Dashboard</h4>
+                        <h4>{{$user->name}} Dashboard</h4>
                         <p>
                             <div class="row">
                             <div class="col-md-4 dashboard">
                                 <div id="user-avatar-dashboard">
-                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                    @if($user->image == null)
                                         <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail avatar-dashboard" alt="image">
                                     @else
-                                    <img src="storage/{{\Illuminate\Support\Facades\Auth::user()->image}}" class="img-thumbnail avatar-dashboard"
+                                    <img src="storage/{{$user->image}}" class="img-thumbnail avatar-dashboard"
                                          alt="image">
                                         @endif
                                 </div>
@@ -57,23 +57,23 @@
                             </div>
 
                             <div class="col-md-4">
-                                <b>About {{\Illuminate\Support\Facades\Auth::user()->name}}:</b><i class="btn btn-success fas fa-edit desc-edit"></i> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>{{\Illuminate\Support\Facades\Auth::user()->desc}}</textarea>
+                                <b>About {{$user->name}}:</b><i class="btn btn-success fas fa-edit desc-edit"></i> <textarea class="form-control userDesc" style=" margin-top: 0px; margin-bottom: 15px;  height: 150px;" readonly>{{$user->desc}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <b>Email: <i class="fas fa-envelope-square"></i></b>  <input readonly class="form-control"
-                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->email}}">
+                                                      value=" {{$user->email}}">
                             </div>
                             <div class="col-md-4">
                                 <b>Time Purchased: <i class="fas fa-shopping-cart"></i></b>  <input readonly class="form-control"
-                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->full_name}}">
+                                                      value=" {{$user->full_name}}">
                             </div>
                             <div class="col-md-4">
                                 <b>Profile View: <i class="fas fa-users"></i></b>  <input readonly class="form-control"
-                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->phone}}">
+                                                      value=" {{$user->phone}}">
                             </div>
                             <div class="col-lg-12">
                                 <b>Total $ Cost: <i class="fas fa-money-check-alt"></i></b>  <input readonly class="form-control"
-                                                      value=" {{\Illuminate\Support\Facades\Auth::user()->address}}">
+                                                      value=" {{$user->address}}">
                             </div>
                         </div>
 
@@ -97,19 +97,19 @@
                             <div id="showPost">
                                 @if(\App\Models\Post::all() != null)
                                     @foreach(\App\Models\Post::all() as $comment)
-                                        @if(\Illuminate\Support\Facades\Auth::user()->id === $comment->user_id)
+                                        @if($user->id === $comment->user_id)
                                             <div class="user-post{{$comment->id}}">
                                                 <div class="avatar-comment">
-                                                    @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                                    @if($user->image == null)
                                                         <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail avatar-comment" alt="image">
                                                         @else
-                                                    <img src="{{asset('/storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}"
+                                                    <img src="{{asset('/storage/'.$user->image)}}"
                                                          class="img-thumbnail avatar-comment" alt="image">
                                                         @endif
                                                 </div>
 
 
-                                                <a><b>{{\Illuminate\Support\Facades\Auth::user()->name}}</b></a>
+                                                <a><b>{{$user->name}}</b></a>
                                                 <a>{{$comment->created_at}}</a>
                                                 <button class="btn btn-info btn-edit-post" data-id="{{$comment->id}}"><i class="fas fa-edit"></i></button>
                                                 <button class="btn btn-danger btn-del-post" data-id="{{$comment->id}}"><i class="fas fa-trash-alt"></i>
@@ -235,10 +235,10 @@
 {{--                        update Avatar--}}
                         <div class="row">
                             <div class="col-lg-12">
-                                @if(\Illuminate\Support\Facades\Auth::user()->image == null)
+                                @if($user->image == null)
                                     <img src='{{asset('storage/images/user-avatar.jpg')}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
                                     @else
-                                <img src='{{asset('storage/'.\Illuminate\Support\Facades\Auth::user()->image)}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
+                                <img src='{{asset('storage/'.$user->image)}}' class='img-thumbnail' id="previewUserAvatar" alt='image'>
                                     @endif
                             </div>
                             <div class="col-lg-12">
@@ -262,38 +262,38 @@
                                     <div class="col-md-6">
                                         Name:
                                         <input class="form-control" id="editName" name="name" type="text"
-                                               value="{{\Illuminate\Support\Facades\Auth::user()->name}}"
+                                               value="{{$user->name}}"
                                                placeholder="Name">
                                         <span id="showErrorName" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Full Name:
                                         <input class="form-control" id="editFullName" name="full_name" type="text"
-                                               value="{{\Illuminate\Support\Facades\Auth::user()->full_name}}"
+                                               value="{{$user->full_name}}"
                                                placeholder="Full Name">
                                         <span id="showErrorFullName" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Phone Number
                                         <input class="form-control" id="editPhone" name="phone" type="text"
-                                               value="{{\Illuminate\Support\Facades\Auth::user()->phone}}"
+                                               value="{{$user->phone}}"
                                                placeholder="Phone Number">
                                         <span id="showErrorPhone" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         Email
                                         <input class="form-control" name="email" type="email"
-                                               value="{{\Illuminate\Support\Facades\Auth::user()->email}}" readonly>
+                                               value="{{$user->email}}" readonly>
                                     </div>
                                     <div class="col-md-12">
                                         Address
                                         <input class="form-control" id="editAddress" name="address" type="text"
-                                               value="{{\Illuminate\Support\Facades\Auth::user()->address}}"
+                                               value="{{$user->address}}"
                                                placeholder="Address">
                                         <span id="showErrorAddress" class="text-danger"></span>
                                     </div>
                                     <input hidden id="showId"
-                                           data-id="{{\Illuminate\Support\Facades\Auth::user()->id}}">
+                                           data-id="{{$user->id}}">
                                     <div class="col-md-12">
                                         <button class="btn" type="submit">Update Account</button>
                                         <br><br>
@@ -344,10 +344,10 @@
 {{--end my account--}}
 
 {{--show user name--}}
-<input id="authUserName" hidden value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+<input id="authUserName" hidden value="{{$user->name}}">
 {{--end show user name--}}
 show user image src
-<input hidden id="userAvatarSrc" value="{{\Illuminate\Support\Facades\Auth::user()->image}}" data-image="{{\Illuminate\Support\Facades\Auth::user()->image}}">
+<input hidden id="userAvatarSrc" value="{{$user->image}}" data-image="{{$user->image}}">
 <script>
 
     $('#updateUserForm').on('submit', function (e) {

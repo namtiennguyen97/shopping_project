@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/',[\App\Http\Controllers\Controller::class,'mainIndex'])->name('index');
 Route::get('/home', [\App\Http\Controllers\Controller::class,'index'])->name('home');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -51,7 +49,7 @@ Route::get('/showOnePost/{id}',[\App\Http\Controllers\PostController::class,'sho
 //update user avatar at dashboard
 Route::post('/updateUserAvatar/{id}',[\App\Http\Controllers\UserController::class,'storeUserAvatar'])->name('user.update.avatar');
 //show user profile
-Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'showUserProfile'])->name('show.user.profile');
+//Route::get('showUserProfile/{id}',[\App\Http\Controllers\UserController::class,'showUserProfile'])->name('show.user.profile');
 
 
 //Admin blade
@@ -70,7 +68,17 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::get('/category-render',[\App\Http\Controllers\Admin\AdminController::class,'renderCategory'])->name('admin.category.render');
 });
 
-
-Route::get('/',[\App\Http\Controllers\ProductController::class,'productIndex']);
+//
+//Route::get('/',[\App\Http\Controllers\ProductController::class,'productIndex']);
 Route::post('/createProduct',[\App\Http\Controllers\ProductController::class,'createProductAdmin']);
 
+//custom Auth
+Route::post('/userRegister',[\App\Http\Controllers\CustomAuth::class,'register'])->name('custom.register');
+Route::post('/userLogin',[\App\Http\Controllers\CustomAuth::class,'userLogin'])->name('custom.login');
+Route::post('/userLogout',[\App\Http\Controllers\CustomAuth::class,'logout'])->name('custom.logout');
+
+Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashboard'])->name('custom.user.dashboard');
+
+Route::get('/facade', function (){
+return view('facade');
+});

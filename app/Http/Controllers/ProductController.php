@@ -31,6 +31,7 @@ class ProductController extends Controller
     public function productIndex()
     {
         $product = $this->productService->index();
+
         return view('index', compact('product'));
     }
 
