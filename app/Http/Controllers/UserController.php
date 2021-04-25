@@ -132,9 +132,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $userViewCount = 'user_'.$id;
-        if (!\session()->has($userViewCount)){
+        if (!session()->has($userViewCount)){
             User::where('id',$id)->increment('view_count');
-            \session()->put($userViewCount);
+            session()->put($userViewCount);
         }
         return view('user.profileModal', compact('user'));
     }

@@ -40,6 +40,9 @@
                                 <div class="dropdown-menu">
 
                                     <a href="{{ route('custom.user.dashboard') }}" class="dropdown-item">Profile <i class="fas fa-user"></i></a>
+                                    @if(\App\Http\UserFacade::getUser()->role_id == 2)
+                                        <a href="{{ route('admin.user') }}" class="dropdown-item">Admin Control<i class="fas fa-user"></i></a>
+                                    @endif
 
                                         <form method="POST" action="{{ route('custom.logout') }}" class="dropdown-item">
                                             @csrf
@@ -50,15 +53,13 @@
                                             Logout <i class="fas fa-sign-out-alt"></i></a>
                                         </form>
 
+
                                 </div>
                             @else
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                                 <div class="dropdown-menu">
                                     <a href="javascript:" id="customLogin" class="dropdown-item">Login</a>
-
                                         <a href="javascript:" id="customeRegister" class="dropdown-item">Register</a>
-
-
                                 </div>
                             @endif
                     </div>

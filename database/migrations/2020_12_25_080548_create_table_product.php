@@ -21,7 +21,7 @@ class CreateTableProduct extends Migration
             $table->string('image');
             $table->string('previewImage1')->nullable();
             $table->string('previewImage2')->nullable();
-            $table->integer('view_count')->nullable();
+            $table->integer('view_count')->default(0);
             $table->text('desc')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');

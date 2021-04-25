@@ -125,6 +125,14 @@
                                 <td><img id="previewImage" class="img img-thumbnail" width="200"></td>
                             </tr>
                             <tr>
+                                <td>Second Image (recommended):</td>
+                                <td><input type="file" name="previewImage1" ></td>
+                            </tr>
+                            <tr>
+                                <td>Third Image (recommended):</td>
+                                <td><input type="file" name="previewImage2" ></td>
+                            </tr>
+                            <tr>
                                 <td>Product Desc:</td>
                                 <td><textarea id="productDesc" name="desc"></textarea></td>
                             </tr>

@@ -19,7 +19,7 @@ class CreateTablePost extends Migration
             $table->text('comment');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('view_count')->nullable();
+            $table->integer('view_count')->default(0);
         });
     }
 

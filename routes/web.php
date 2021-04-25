@@ -62,7 +62,7 @@ Route::group(['namespace'=>'Admin'],function (){
     Route::get('/userRender',[\App\Http\Controllers\Admin\AdminController::class,'renderUser'])->name('render.user');
     Route::get('/deleteUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteUser'])->name('admin.delete.user');
     Route::post('/updateUser/{id}',[\App\Http\Controllers\Admin\AdminController::class,'editUser'])->name('admin.edit.user');
-    Route::post('/storeProduct',[\App\Http\Controllers\Admin\AdminController::class,'storeProduction'])->name('admin.store.product');
+    Route::post('/storeProduct',[\App\Http\Controllers\Admin\AdminController::class,'storeProduction'])->name('admin.store.product')->middleware('adminCheck');
     Route::get('/adminProduct',[\App\Http\Controllers\Admin\AdminController::class,'productIndex'])->name('admin.product.index');
     //delete product
     Route::get('deleteProduct/{id}',[\App\Http\Controllers\Admin\AdminController::class,'deleteProduct'])->name('admin.delete.product');
@@ -80,5 +80,8 @@ Route::post('/userLogin',[\App\Http\Controllers\CustomAuth::class,'userLogin'])-
 Route::post('/userLogout',[\App\Http\Controllers\CustomAuth::class,'logout'])->name('custom.logout');
 
 Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashboard'])->name('custom.user.dashboard')->middleware('loginCheck');
+
+//showDetail product with view count + 1
+Route::get('/showDetail/{id}',[\App\Http\Controllers\ProductController::class,'showDetailProduct'])->name('product.detail.show');
 
 

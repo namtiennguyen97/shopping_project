@@ -91,13 +91,20 @@ class AdminController extends Controller
         if ($request->hasFile('image')){
             $image1 = $request->file('image');
             $path = $image1->store('images','public');
+            $previewImage1 = $request->file('previewImage1');
+            $path2 = $previewImage1->store('images','public');
+            $previewImage2 = $request->file('previewImage2');
+            $path3 = $previewImage2->store('images','public');
+
             $newProduct = $this->productService->create([
                 'name' => $request->name,
                 'price' => $request->price,
                 'vendor' => $request->vendor,
                 'desc' => $request->desc,
                 'category_id' => $request->category_id,
-                'image' => $path
+                'image' => $path,
+                'previewImage1' => $path2,
+                'previewImage2' =>$path3
             ]);
             return response()->json($newProduct);
         }

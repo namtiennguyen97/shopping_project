@@ -364,7 +364,7 @@
                         <div class="product-action">
                             <a href="javascript:"><i class="fa fa-cart-plus" onclick="addCart({{$row->id}})"></i></a>
                             <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
+                            <a href="{{route('product.detail.show',$row->id)}}"><i class="fa fa-eye"></i></a>
                         </div>
                     </div>
                     <div class="product-price">

@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->text('desc')->nullable()->default('Hi every one!');
 
-            $table->integer('view_count')->nullable()->default(0);
+            $table->integer('view_count')->default(0);
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();

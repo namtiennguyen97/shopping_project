@@ -6,6 +6,7 @@ use App\Http\Service\productServiceImplement\ProductServiceImplement;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -58,9 +59,19 @@ class ProductController extends Controller
             ]);
             return $newProduct;
         }
+    }
 
-
+    //show detail product with viewcount + 1
+    public function showDetailProduct($id){
+        $productKey = 'product_'.$id;
+        if (!session()->has($productKey)){
+            Product::where('id',$id)->increment('view_count');
+            session()->put($productKey);
+        }
+        $product = Product::find($id);
+        return view('shoppingCart.detailProduct', compact('product'));
     }
 
 
 }
+
