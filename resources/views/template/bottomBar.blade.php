@@ -5,7 +5,7 @@
             <div class="col-md-3">
                 <div class="logo">
                     <a href="index.html">
-                        <img src="{{asset('mainTemplate/img/logo.png')}}" alt="Logo">
+                        <img src="{{asset('storage/pageImg/logo.jpg')}}" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -75,8 +75,8 @@
                                 </div>
 
                                 <div>
-                                    <a class="btn btn-warning show-cart-detail"><h2>View Cart<i class="fa fa-cart-arrow-down" aria-hidden="true"></i></h2></a>
-                                    <a class="btn btn-success confirm-checkout"><h2>Check Out<i class="fas fa-credit-card"></i></h2></a>
+                                    <a class="btn btn-warning show-cart-detail" href="{{route('cart.view')}}"><h2>View Cart<i class="fa fa-cart-arrow-down" aria-hidden="true"></i></h2></a>
+                                    <a class="btn btn-success confirm-checkout"><h2>Purchase<i class="fas fa-credit-card"></i></h2></a>
                                 </div>
 
 

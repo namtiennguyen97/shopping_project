@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>N Store</title>
+    <title>N-Shopping</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="eCommerce HTML Template Free Download" name="keywords">
     <meta content="eCommerce HTML Template Free Download" name="description">
@@ -42,7 +42,7 @@
             <div class="col-md-3">
                 <div class="logo">
                     <a href="index.html">
-                        <img src="{{asset('mainTemplate/img/logo.png')}}" alt="Logo">
+                        <img src="{{asset('storage/pageImg/logo.jpg')}}" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -113,8 +113,8 @@
                                 </div>
 
                                 <div>
-                                    <a class="btn btn-warning show-cart-detail"><h2>View Cart<i class="fa fa-cart-arrow-down" aria-hidden="true"></i></h2></a>
-                                    <a class="btn btn-success confirm-checkout"><h2>Check Out<i class="fas fa-credit-card"></i></h2></a>
+                                    <a class="btn btn-warning show-cart-detail" href="{{route('cart.view')}}"><h2>View Cart<i class="fa fa-cart-arrow-down" aria-hidden="true"></i></h2></a>
+                                    <a class="btn btn-success confirm-checkout"><h2>Purchase<i class="fas fa-credit-card"></i></h2></a>
                                 </div>
 
                             </div>
@@ -669,19 +669,19 @@
 <!-- Footer End -->
 
 <!-- Footer Bottom Start -->
-<div class="footer-bottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 copyright">
-                <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
-            </div>
+{{--<div class="footer-bottom">--}}
+{{--    <div class="container">--}}
+{{--        <div class="row">--}}
+{{--            <div class="col-md-6 copyright">--}}
+{{--                <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>--}}
+{{--            </div>--}}
 
-            <div class="col-md-6 template-by">
-                <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>
-            </div>
-        </div>
-    </div>
-</div>
+{{--            <div class="col-md-6 template-by">--}}
+{{--                <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- Footer Bottom End -->
 
 
@@ -804,7 +804,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Are you want to purchase this product?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Are you want to purchase this product immediately?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -817,12 +817,15 @@
                     </tr>
                     <tr>
                         <td>Product Price:</td>
+                        <td><span id="productPurchasePrice"></span></td>
                     </tr>
+                    <td>Image:</td>
+                    <td><div id="productPurchaseImg"></div></td>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="confirmPurchase" class="btn btn-primary">Purchase</button>
+                <button type="button" id="confirmPurchaseOne" class="btn btn-primary">Purchase now</button>
             </div>
         </div>
     </div>
@@ -841,17 +844,34 @@
 
 <script src="{{asset('indexJs.js')}}"></script>
 <script>
-    $('.productIndex').on('click','.btn-purchase-now', function (e) {
-        e.preventDefault();
-        let id = $(this).data('id');
-        $.ajax({
-            url: 'mail/one/'+id,
-            method: 'get',
-            success: function () {
-                alertify.success('You has been purchased! Check your email!');
-            }
-        });
+    let id;
+    $('.productIndex').on('click','.btn-purchase-now', function () {
+             id = $(this).data('id');
+            $('#purchaseOne').modal('show');
+            $.ajax({
+                url: 'product/show/'+id,
+                method: 'get',
+                success: function (data) {
+                    $('#productPurchaseName').text(data.name);
+                    $('#productPurchasePrice').text(data.price);
+                    $('#productPurchaseImg').html("<img class='img img-thumbnail' src='/storage/"+data.image+"' style='width: 330px; height: 100px'>");
+                }
+            });
     });
+
+   $('#confirmPurchaseOne').click(function (e) {
+       e.preventDefault();
+
+       $.ajax({
+           url: 'mail/one/'+id,
+           method: 'get',
+           success: function () {
+               alertify.success('You has been purchased! Check your email!');
+           }
+       });
+   });
+
+
 </script>
 </body>
 </html>

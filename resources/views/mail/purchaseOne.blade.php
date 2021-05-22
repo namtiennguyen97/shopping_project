@@ -1,4 +1,4 @@
-<p style="color: red">Thank for purchasing! We got your order.</p>
+<p style="color: red">Thank for purchasing! We- N-Shopping got your order.</p>
 <br>
 <p>Your product detail: </p>
 <br>

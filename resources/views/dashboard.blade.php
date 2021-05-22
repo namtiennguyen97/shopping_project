@@ -348,7 +348,7 @@
 {{--show user name--}}
 <input id="authUserName" hidden value="{{$user->name}}">
 {{--end show user name--}}
-show user image src
+{{--show user image src--}}
 <input hidden id="userAvatarSrc" value="{{$user->image}}" data-image="{{$user->image}}">
 <script>
 

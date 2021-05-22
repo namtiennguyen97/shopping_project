@@ -85,5 +85,7 @@ Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashbo
 Route::get('/showDetail/{id}',[\App\Http\Controllers\ProductController::class,'showDetailProduct'])->name('product.detail.show');
 // make purchase and send mail
 Route::get('/mail/one/{id}',[\App\Http\Controllers\ProductController::class,'purchase'])->name('purchase.one.mail');
+Route::get('/product/show/{id}',[\App\Http\Controllers\ProductController::class,'show'])->name('product.show');
 
 
+Route::get('/yourCart',[\App\Http\Controllers\ProductController::class,'viewCart'])->name('cart.view')->middleware('loginCheck');;
