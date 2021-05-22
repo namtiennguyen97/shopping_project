@@ -83,5 +83,7 @@ Route::get('/userDashboard',[\App\Http\Controllers\CustomAuth::class,'userDashbo
 
 //showDetail product with view count + 1
 Route::get('/showDetail/{id}',[\App\Http\Controllers\ProductController::class,'showDetailProduct'])->name('product.detail.show');
+// make purchase and send mail
+Route::get('/mail/one/{id}',[\App\Http\Controllers\ProductController::class,'purchase'])->name('purchase.one.mail');
 
 

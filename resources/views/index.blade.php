@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-6">
                 <i class="fa fa-phone-alt"></i>
-                +012-345-6789
+                +0342842005
             </div>
         </div>
     </div>
@@ -346,7 +346,7 @@
 {{--            Foreach product data here--}}
             @foreach(\App\Models\Product::all() as $row)
             <div class="col-lg-3">
-                <div class="product-item">
+                <div class="product-item productIndex">
                     <div class="product-title">
                         <a href="#">{{$row->name}}</a>
                         <div class="ratting">
@@ -369,7 +369,7 @@
                     </div>
                     <div class="product-price">
                         <h3><span>$</span>{{number_format($row->price)}}</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                        <a class="btn btn-purchase-now" data-id="{{$row->id}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                 </div>
             </div>
@@ -709,7 +709,7 @@
             <form method="post" id="loginForm" action="{{route('custom.login')}}">
                 @csrf
                 <div class="modal-body">
-                   <table class="table table-striped ">
+                   <table class="table table-bordered table-striped ">
                        <tr>
                            <td>Email:</td>
                            <td><input type="email" class="form-control" name="email" placeholder="Enter Your email..."></td>
@@ -719,7 +719,7 @@
                            <td><input type="password" class="form-control" name="password" placeholder="Enter your password..."></td>
                        </tr>
                        <tr>
-                           <td>If you dont have any account, pls register!</td>
+                           <td>Or Register!</td>
                            <td><button type="button" class="btn btn-info form-control" id="registerOnLoginModal">Register</button></td>
                        </tr>
                    </table>
@@ -799,7 +799,34 @@
 </div>
 
 
-
+<!-- Modal One-Product purchase -->
+<div class="modal fade" id="purchaseOne" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you want to purchase this product?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td>Product name: </td>
+                        <td><span id="productPurchaseName"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Product Price:</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="confirmPurchase" class="btn btn-primary">Purchase</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -812,120 +839,19 @@
 <!-- Template Javascript -->
 <script src="{{asset('mainTemplate/js/main.js')}}"></script>
 
+<script src="{{asset('indexJs.js')}}"></script>
 <script>
-
-    //login custom
-    $('#customLogin').click(function () {
-        $('#modalLogin').modal('show');
-    });
-
-    $('#registerOnLoginModal').click(function () {
-        $('#modalLogin').modal('hide');
-        $('#modalRegister').modal('show');
-    });
-
-    $('#customeRegister').click(function () {
-
-        $('#modalRegister').modal('show');
-    });
-
-
-    $('#loginForm').on('submit', function () {
-
-        $.ajax({
-            url: "{{route('custom.login')}}",
-            method: 'post',
-            dataType: 'json',
-            data: $('#loginForm').serialize(),
-            success: function (data) {
-                alertify.success('You has been logged in.');
-                // window.location.reload();
-                console.log(data);
-            },
-            error: function (response) {
-                alertify.error('Wrong email or password!');
-                console.log(response);
-            }
-        });
-    });
-    //end login custom
-
-    $('#registerForm').on('submit', function (e) {
+    $('.productIndex').on('click','.btn-purchase-now', function (e) {
         e.preventDefault();
+        let id = $(this).data('id');
         $.ajax({
-            url: "{{route('custom.register')}}",
-            method: 'post',
-            data: $('#registerForm').serialize(),
-            dataType: 'json',
+            url: 'mail/one/'+id,
+            method: 'get',
             success: function () {
-                alertify.success('Your account has been created! Now login.');
-                $('#modalRegister').modal('hide');
-                $('#modalLogin').modal('show');
-            },
-            error: function (response) {
-                alertify.error('Something went wrong, please check again!');
-                console.log(response);
-            }
-        });
-    })
-</script>
-
-
-<script>
-
-function addCart(id) {
-    $.ajax({
-        url: "addCart/" + id,
-        method: 'get',
-        success: function (data) {
-            $('#change-cart-items').empty();
-            $('#change-cart-items').html(data);
-            $('#total-Qty-Product').text($('#qtyCart-cart').val());
-            console.log($('#qtyCart-cart').val());
-            alertify.success('Added to Your Cart!');
-        },
-        error: function (response) {
-            console.log(response);
-            alertify.error('You have to login!');
-        }
-    })
-}
-
-    $('#change-cart-items').on('click', '.si-close .deleteProduct', function () {
-        $.ajax({
-            url: 'deleteCart/' + $(this).data('id'),
-            type: 'GET',
-            success: function (data) {
-                $('#change-cart-items').empty();
-                $('#change-cart-items').html(data);
-                $('#total-Qty-Product').text($('#qtyCart-cart').val());
-                if(!$('#qtyCart-cart').val()){
-                    $('#total-Qty-Product').text('0');
-                }
-                console.log($('#qtyCart-cart').val());
-                alertify.success('Delete Your Item!');
-            },
-            error: function (response) {
-                console.log(response);
-                alertify.error('You have to login!');
+                alertify.success('You has been purchased! Check your email!');
             }
         });
     });
-
-    $('.review-slider-item').on('click','.showUserProfile', function () {
-        $('#userProfileModal').modal('show');
-            $.ajax({
-                url: "showUserProfile/"+$(this).data('id'),
-                method: 'get',
-                success: function (data) {
-                    console.log(data);
-                    $('#appendUserProfile').empty();
-                    $('#appendUserProfile').html(data);
-                }
-            });
-    })
-
-
 </script>
 </body>
 </html>

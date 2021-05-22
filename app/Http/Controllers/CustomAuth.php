@@ -34,7 +34,7 @@ class CustomAuth extends Controller
 
     public function userLogin(Request $request){
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
         ]);
         $user = User::where('email','=',$request->email)->first();

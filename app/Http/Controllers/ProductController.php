@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Service\productServiceImplement\ProductServiceImplement;
+use App\Http\UserFacade;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -72,6 +74,24 @@ class ProductController extends Controller
         return view('shoppingCart.detailProduct', compact('product'));
     }
 
+
+    //purchase
+    public function purchase($id){
+        if (\session()->has('logged')){
+            $product = Product::findOrFail($id);
+            Mail::send('mail.purchaseOne',[
+                'name' => $product->name,
+                'price' => $product->price,
+                'desc' => $product->desc,
+                'userPhone' => UserFacade::getUser()->phone
+            ], function ($mail){
+                $mail->to(UserFacade::getUser()->email,'N store');
+                $mail->from('toilanam97@gmail.com');
+                $mail->subject('Thank for purchasing!');
+            });
+        }
+
+    }
 
 }
 

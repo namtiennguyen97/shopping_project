@@ -1,5 +1,6 @@
 
 @include('template.master')
+
 @include('template.menuBar')
 @include('template.bottomBar')
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -98,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="action">
-                                    <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                    <a class="btn" onclick="addCart({{$product->id}})"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                                     <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
                                 </div>
                             </div>
