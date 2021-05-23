@@ -38,6 +38,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('mainTemplate/css/style.css')}}" rel="stylesheet">
+
 </head>
 <body>
 <script>

@@ -31,12 +31,7 @@ class UserController extends Controller
             'phone' => 'numeric|required',
             'address' => 'required|max:40'
         ]);
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->full_name = $request->input('full_name');
-        $user->address = $request->input('address');
-        $user->phone = $request->input('phone');
-        $user->save();
+        $user = User::update($request->all(),$id);
         return $user;
     }
 
@@ -83,8 +78,6 @@ class UserController extends Controller
            \session()->pull('Cart');
        }
        // neu logout hoac ko dang nhap thi xoa sessin Cart
-
-
 
     }
 

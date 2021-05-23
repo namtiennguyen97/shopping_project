@@ -88,4 +88,6 @@ Route::get('/mail/one/{id}',[\App\Http\Controllers\ProductController::class,'pur
 Route::get('/product/show/{id}',[\App\Http\Controllers\ProductController::class,'show'])->name('product.show');
 
 
-Route::get('/yourCart',[\App\Http\Controllers\ProductController::class,'viewCart'])->name('cart.view')->middleware('loginCheck');;
+Route::get('/yourCart',[\App\Http\Controllers\ProductController::class,'viewCart'])->name('cart.view')->middleware('loginCheck');
+//show all product tai trang san pham
+Route::get('/product',[\App\Http\Controllers\ProductController::class,'productViewAll'])->name('product.view.all');

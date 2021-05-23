@@ -111,5 +111,8 @@ class ProductController extends Controller
 
     }
 
+    public function productViewAll(){
+        return view('products.index');
+    }
 }
 
