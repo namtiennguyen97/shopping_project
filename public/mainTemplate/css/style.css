@@ -2455,6 +2455,8 @@ h2 {
 .dropdown-contentA .show-cart-detail:hover {background-color: #ffd04e;}
 .dropdown-contentA .confirm-checkout:hover {background-color: #4fff3d;}
 
+.dropdown-contentA .show-cart-detail {background-color: #ff702f;}
+
 .confirm-checkout{
     background-color: #329a34;
     cursor: pointer;

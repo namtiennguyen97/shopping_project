@@ -362,5 +362,6 @@
 <script src="{{asset('indexJs.js')}}"></script>
 <!-- Template Javascript -->
 <script src="{{asset('mainTemplate/js/main.js')}}"></script>
+
 </body>
 

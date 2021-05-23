@@ -33,7 +33,7 @@
 
                                 <div id="load-dashboard-avatar">
                                     @if(\App\Http\UserFacade::getUser()->image == null)
-                                        <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail user-avatar" alt="image">
+                                        <img src="{{asset('storage/images/user-avatar.jpg')}}" class="img-thumbnail user-avatar" alt="image" >
                                     @else
                                     <a><img src="{{asset('storage/'.\App\Http\UserFacade::getUser()->image)}}" class="img-thumbnail user-avatar" width="40" alt="image"></a>
                                         @endif

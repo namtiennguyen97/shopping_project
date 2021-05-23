@@ -248,7 +248,7 @@
             <div class="col-lg-3 col-md-6 feature-col">
                 <div class="feature-content fc3">
                     <i class="fa fa-sync-alt"></i>
-                    <h2>90 Days Return</h2>
+                    <h2>Bảo hành 90 ngày</h2>
                     <p>
                         Hoàn trả trong vòng 90 ngày
                     </p>
@@ -601,18 +601,18 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
-                    <h2>Get in Touch</h2>
+                    <h2>Liên hệ</h2>
                     <div class="contact-info">
-                        <p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-                        <p><i class="fa fa-envelope"></i>email@example.com</p>
-                        <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                        <p><i class="fa fa-map-marker"></i>Đông Anh- Hà Nội</p>
+                        <p><i class="fa fa-envelope"></i>toilanam97@gmail.com</p>
+                        <p><i class="fa fa-phone"></i>+0342842005</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
-                    <h2>Follow Us</h2>
+                    <h2>Theo dõi</h2>
                     <div class="contact-info">
                         <div class="social">
                             <a href=""><i class="fab fa-twitter"></i></a>
@@ -627,7 +627,7 @@
 
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
-                    <h2>Company Info</h2>
+                    <h2>Doanh nghiệp</h2>
                     <ul>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Privacy Policy</a></li>
@@ -638,7 +638,7 @@
 
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
-                    <h2>Purchase Info</h2>
+                    <h2>Thông tin thanh toán</h2>
                     <ul>
                         <li><a href="#">Pyament Policy</a></li>
                         <li><a href="#">Shipping Policy</a></li>
@@ -651,13 +651,13 @@
         <div class="row payment align-items-center">
             <div class="col-md-6">
                 <div class="payment-method">
-                    <h2>We Accept:</h2>
+                    <h2>Chấp nhận thanh toán qua:</h2>
                     <img src="{{asset('mainTemplate/img/payment-method.png')}}" alt="Payment Method" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="payment-security">
-                    <h2>Secured By:</h2>
+                    <h2>Được đảm bảo bởi:</h2>
                     <img src="{{asset('mainTemplate/img/godaddy.svg')}}" alt="Payment Security" />
                     <img src="{{asset('mainTemplate/img/norton.svg')}}" alt="Payment Security" />
                     <img src="{{asset('mainTemplate/img/ssl.svg')}}" alt="Payment Security" />
@@ -802,9 +802,9 @@
 <!-- Modal One-Product purchase -->
 <div class="modal fade" id="purchaseOne" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="afterPurchaseOne">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Are you want to purchase this product immediately?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Bạn muốn mua sản phẩm này luôn chứ?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -812,20 +812,20 @@
             <div class="modal-body">
                 <table class="table table-striped table-bordered">
                     <tr>
-                        <td>Product name: </td>
+                        <td>Tên hàng: </td>
                         <td><span id="productPurchaseName"></span></td>
                     </tr>
                     <tr>
-                        <td>Product Price:</td>
+                        <td>Gía:</td>
                         <td><span id="productPurchasePrice"></span></td>
                     </tr>
-                    <td>Image:</td>
+                    <td>Ảnh hàng:</td>
                     <td><div id="productPurchaseImg"></div></td>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="confirmPurchaseOne" class="btn btn-primary">Purchase now</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng & tiếp tục shopping</button>
+                <button type="button" id="confirmPurchaseOne" class="btn btn-primary">Mua Ngay!</button>
             </div>
         </div>
     </div>
@@ -866,6 +866,7 @@
            url: 'mail/one/'+id,
            method: 'get',
            success: function () {
+               // $('#afterPurchaseOne').html("<h4 style='font-weight: bold' class='text-success'>Purchase successful! <i class=\"fas fa-check\"></i></h4> Check your mail <i class=\"fas fa-envelope\"></i> to get more detail!");
                alertify.success('You has been purchased! Check your email!');
            }
        });

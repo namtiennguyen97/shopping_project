@@ -107,3 +107,7 @@ $('.review-slider-item').on('click','.showUserProfile', function () {
         }
     });
 })
+
+
+// delete item cart form main page cart
+

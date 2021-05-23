@@ -43,7 +43,7 @@
                                 <span class="text-danger">You did not make any product, let look around and make some!</span>
                                 @else
                                 @foreach(\Illuminate\Support\Facades\Session::get('Cart')->product as $item)
-                                    <tr>
+                                    <tr class="cartItem{{$item['productInfo']->id}}">
                                         <td>
                                             <div class="img">
                                                 <a href="#"><img src="{{asset('storage/'.$item['productInfo']->image)}}" style="width: 60px; height: 60px" class="img img-thumbnail"></a>
@@ -59,7 +59,7 @@
                                             </div>
                                         </td>
                                         <td>$99</td>
-                                        <td><button><i  data-id="{{$item['productInfo']->id}}" class="fa fa-trash"></i></button></td>
+                                        <td><button><i  data-id="{{$item['productInfo']->id}}" onclick="deleteItemCart({{$item['productInfo']->id}})" class="fa fa-trash"></i></button></td>
                                     </tr>
                                     @endforeach
                                 @endif
@@ -176,21 +176,7 @@
 </div>
 <!-- Footer End -->
 
-{{--<!-- Footer Bottom Start -->--}}
-{{--<div class="footer-bottom">--}}
-{{--    <div class="container">--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-md-6 copyright">--}}
-{{--                <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>--}}
-{{--            </div>--}}
 
-{{--            <div class="col-md-6 template-by">--}}
-{{--                <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
-{{--<!-- Footer Bottom End -->--}}
 
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -202,7 +188,31 @@
 {{--<script src="{{asset('mainTemplate/lib/slick/slick.min.js')}}"></script>--}}
 
 <!-- Template Javascript -->
-<script src="{{asset('mainTemplate/')}}js/main.js"></script>
+<script src="{{asset('mainTemplate/js/main.js')}}"></script>
+<script>
+    function deleteItemCart(id) {
+        $.ajax({
+            url: 'deleteCart/'+id,
+            type: 'GET',
+            success: function (data) {
+                $('#change-cart-items').empty();
+                $('#change-cart-items').html(data);
+                $('#total-Qty-Product').text($('#qtyCart-cart').val());
+                $('.cartItem'+id).remove();
+
+                if(!$('#qtyCart-cart').val()){
+                    $('#total-Qty-Product').text('0');
+                }
+                console.log($('#qtyCart-cart').val());
+                alertify.success('Delete Your Item!');
+            },
+            error: function (response) {
+                console.log('error delete: ' + response);
+                // alertify.error('You have to login!');
+            }
+        });
+    }
+</script>
 </body>
 
 
