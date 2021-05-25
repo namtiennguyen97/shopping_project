@@ -7,6 +7,7 @@ use App\Http\UserFacade;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -114,5 +115,87 @@ class ProductController extends Controller
     public function productViewAll(){
         return view('products.index');
     }
+
+    // search product index
+    public function productSearching(Request $request){
+
+        if ($request->ajax()){
+            $html = '';
+            $query = $request->get('query');
+            if ($query != ''){
+                $productQuery = Product::where('name','like','%'.$query.'%')->get();
+                    foreach ($productQuery as $value){
+                        $html .= "<div class='col-md-4'>
+                            <div class='product-item'>
+                            <div class='product-title'>
+                                <a>".$value->name."</a>
+                                <div class='ratting'>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                </div>
+                            </div>
+                            <div class='product-image'>
+                                <a href=''>
+                                    <img src='storage/".$value->image."' alt='Product Image'>
+                                </a>
+                                <div class='product-action'>
+                                    <a href='javascript:'><i class='fa fa-cart-plus' onclick='addCart(".$value->id.")'></i></a>
+                                    <a href=''><i class='fa fa-heart'></i></a>
+                                    <a href='javascript:'><i class='fa fa-search'></i></a>
+                                </div>
+                            </div>
+                            <div class='product-price'>
+                                <h3><span>$</span>".$value->price."</h3>
+                                <a class='btn btn-purchase-now' data-id='".$value->id."'><i class='fa fa-shopping-cart'></i>Buy Now</a>
+                            </div>
+                        </div>
+                        </div>";
+                }
+            } else{
+                $productQuery = Product::all();
+                foreach ($productQuery as $value){
+
+                    $html .= "<div class='col-md-4'>
+                            <div class='product-item'>
+                            <div class='product-title'>
+                                <a>".$value->name."</a>
+                                <div class='ratting'>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                    <i class='fa fa-star'></i>
+                                </div>
+                            </div>
+                            <div class='product-image'>
+                                <a href=''>
+                                    <img src='storage/".$value->image."' alt='Product Image'>
+                                </a>
+                                <div class='product-action'>
+                                    <a href='javascript:'><i class='fa fa-cart-plus' onclick='addCart(".$value->id.")'></i></a>
+                                    <a href=''><i class='fa fa-heart'></i></a>
+                                    <a href='javascript:'><i class='fa fa-search'></i></a>
+                                </div>
+                            </div>
+                            <div class='product-price'>
+                                <h3><span>$</span>".$value->price."</h3>
+                                <a class='btn btn-purchase-now' data-id='".$value->id."'><i class='fa fa-shopping-cart'></i>Buy Now</a>
+                            </div>
+                        </div>
+                        </div>";
+                }
+            }
+        }
+
+
+        $productData = [
+          'data' => $html
+        ];
+        echo json_encode($productData);
+    }
+
 }
 

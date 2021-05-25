@@ -28,7 +28,11 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="product-search">
-                                        <input type="email" value="Search">
+{{--                                        search o day--}}
+
+                                            <input type="text" name="search" id="searchProduct">
+
+{{--                                        end of searching--}}
                                         <button><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
@@ -68,9 +72,12 @@
                     </div>
 
 {{--                    bat dau foreach product --}}
-                    @foreach(\App\Models\Product::all() as $value)
-                    <div class="col-md-4">
-                        <div class="product-item">
+<div class="row" id="productDataSearch">
+
+
+                     @foreach(\App\Models\Product::all() as $value)
+                        <div class="col-md-4">
+                            <div class="product-item">
                             <div class="product-title">
                                 <a href="#">{{$value->name}}</a>
                                 <div class="ratting">
@@ -95,10 +102,14 @@
                                 <h3><span>$</span>{{$value->price}}</h3>
                                 <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div>
+
                         </div>
-                    </div>
+
+                        </div>
                     @endforeach
+</div>
 {{--                    ket thuc product foreach--}}
+
                 </div>
 
                 <!-- Pagination Start -->
@@ -160,7 +171,7 @@
                             </div>
                             <div class="product-image">
                                 <a href="product-detail.html">
-                                    <img src="img/product-10.jpg" alt="Product Image">
+                                    <img src="{{'mainTemplate/img/product-10.jpg'}}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
                                     <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -186,7 +197,7 @@
                             </div>
                             <div class="product-image">
                                 <a href="product-detail.html">
-                                    <img src="img/product-9.jpg" alt="Product Image">
+                                    <img src="{{'mainTemplate/img/product-9.jpg'}}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
                                     <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -212,7 +223,7 @@
                             </div>
                             <div class="product-image">
                                 <a href="product-detail.html">
-                                    <img src="img/product-8.jpg" alt="Product Image">
+                                    <img src="{{'mainTemplate/img/product-8.jpg'}}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
                                     <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -266,12 +277,12 @@
 <div class="brand">
     <div class="container-fluid">
         <div class="brand-slider">
-            <div class="brand-item"><img src="img/brand-1.png" alt=""></div>
-            <div class="brand-item"><img src="img/brand-2.png" alt=""></div>
-            <div class="brand-item"><img src="img/brand-3.png" alt=""></div>
-            <div class="brand-item"><img src="img/brand-4.png" alt=""></div>
-            <div class="brand-item"><img src="img/brand-5.png" alt=""></div>
-            <div class="brand-item"><img src="img/brand-6.png" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-1.png'}}" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-2.png'}}" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-3.png'}}" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-4.png'}}" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-5.png'}}" alt=""></div>
+            <div class="brand-item"><img src="{{'mainTemplate/img/brand-6.png'}}" alt=""></div>
         </div>
     </div>
 </div>
@@ -334,15 +345,15 @@
             <div class="col-md-6">
                 <div class="payment-method">
                     <h2>We Accept:</h2>
-                    <img src="img/payment-method.png" alt="Payment Method" />
+                    <img src="{{'mainTemplate/img/payment-method.png'}}" alt="Payment Method" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="payment-security">
                     <h2>Secured By:</h2>
-                    <img src="img/godaddy.svg" alt="Payment Security" />
-                    <img src="img/norton.svg" alt="Payment Security" />
-                    <img src="img/ssl.svg" alt="Payment Security" />
+                    <img src="{{'mainTemplate/img/godaddy.svg'}}" alt="Payment Security" />
+                    <img src="{{'mainTemplate/img/norton.svg'}}" alt="Payment Security" />
+                    <img src="{{'mainTemplate/img/ssl.svg'}}" alt="Payment Security" />
                 </div>
             </div>
         </div>
@@ -350,6 +361,7 @@
 </div>
 <!-- Footer End -->
 
+@include('modal.purchaseOne')
 
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -357,11 +369,61 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/slick/slick.min.js"></script>
+{{--<script src="lib/easing/easing.min.js"></script>--}}
+{{--<script src="lib/slick/slick.min.js"></script>--}}
 <script src="{{asset('indexJs.js')}}"></script>
 <!-- Template Javascript -->
 <script src="{{asset('mainTemplate/js/main.js')}}"></script>
 
+
+<script>
+    searchProduct();
+    function searchProduct(query='') {
+            $.ajax({
+                url: '{{route('product.searching')}}',
+                method: 'get',
+                data: {
+                   query: query
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#productDataSearch').html(data.data);
+                }
+            });
+    }
+
+
+    $(document).on('keyup','#searchProduct', function () {
+        let query = $(this).val();
+        searchProduct(query);
+    });
+
+    $('#productDataSearch').on('click','.btn-purchase-now', function () {
+        id = $(this).data('id');
+        $('#purchaseOne').modal('show');
+        $.ajax({
+            url: 'product/show/'+id,
+            method: 'get',
+            success: function (data) {
+                $('#productPurchaseName').text(data.name);
+                $('#productPurchasePrice').text(data.price);
+                $('#productPurchaseImg').html("<img class='img img-thumbnail' src='/storage/"+data.image+"' style='width: 330px; height: 100px'>");
+            }
+        });
+    });
+
+    $('#confirmPurchaseOne').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'mail/one/'+id,
+            method: 'get',
+            success: function () {
+                // $('#afterPurchaseOne').html("<h4 style='font-weight: bold' class='text-success'>Purchase successful! <i class=\"fas fa-check\"></i></h4> Check your mail <i class=\"fas fa-envelope\"></i> to get more detail!");
+                alertify.success('You has been purchased! Check your email!');
+            }
+        });
+    });
+</script>
 </body>
 

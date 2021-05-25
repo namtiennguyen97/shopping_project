@@ -91,3 +91,4 @@ Route::get('/product/show/{id}',[\App\Http\Controllers\ProductController::class,
 Route::get('/yourCart',[\App\Http\Controllers\ProductController::class,'viewCart'])->name('cart.view')->middleware('loginCheck');
 //show all product tai trang san pham
 Route::get('/product',[\App\Http\Controllers\ProductController::class,'productViewAll'])->name('product.view.all');
+Route::get('/product/searching',[\App\Http\Controllers\ProductController::class,'productSearching'])->name('product.searching');
